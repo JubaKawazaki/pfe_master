@@ -1,4 +1,4 @@
 Options All -Indexes
 RewriteEngine On
-RewriteBase /saidal_M2/
+RewriteBase /pfe_master/
 RewriteRule ^([-a-zA-Z0-9]+)$ index.php?page=$1 [L]

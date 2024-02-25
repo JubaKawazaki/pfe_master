@@ -6,7 +6,9 @@ $home = new HomeController();
 $pages = [
     'Login',
     'Dashboard',
-    'listdoc'
+    'listdoc',
+    'Logout',
+    'profil'
 ];
 
 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
@@ -24,7 +26,5 @@ if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
 } else {
     $home->index("Login");
 }
-
-
 
 ?>

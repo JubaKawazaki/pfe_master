@@ -22,7 +22,8 @@ class UserController
                 // Authentification réussie
                 $_SESSION['logged'] = true;
                 $_SESSION['id'] = $res->id;
-                $_SESSION['username'] = $res->nom;
+                $_SESSION['nom'] = $res->nom;
+                $_SESSION['prenom'] = $res->prenom;
                 $_SESSION['mat'] = $res->mat;
                 $_SESSION['type'] = $res->type;
                 $_SESSION['id_adm'] = $res->id_adm;
@@ -35,6 +36,11 @@ class UserController
                 Redirect::to('Login');
             }
         }
+    }
+
+    public function deco()
+    {
+        session_destroy();
     }
 
 }

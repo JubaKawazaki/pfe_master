@@ -1,2 +1,2 @@
 <?php
-define('BASE_URL', 'http://localhost/saidal_M2/');
+define('BASE_URL', 'http://localhost/pfe_master/');
