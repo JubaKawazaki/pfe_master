@@ -8,7 +8,9 @@ $pages = [
     'Dashboard',
     'listdoc',
     'Logout',
-    'profil'
+    'profil',
+    'addemp',
+    'addchef'
 ];
 
 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {

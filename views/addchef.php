@@ -1,25 +1,9 @@
-<?php
-
-$type = $_SESSION['type'];
-
-if (isset($_POST['find'])) {
-    $date = new DocumentController();
-    $employe = $date->findDoc();
-} else {
-    $date = new DocumentController();
-    $employe = $date->getDocumentsCreate();
-}
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <?php
-    include 'includes/header.php';
-    ?>
+    <?php include 'includes/header.php'; ?>
 
 </head>
 
@@ -107,10 +91,6 @@ if (isset($_POST['find'])) {
             }
 
             ?>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="edit.html">
@@ -261,16 +241,22 @@ if (isset($_POST['find'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Afficher nom prenom </span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['nom'] . '   ' . $_SESSION['prenom']; ?>
+                                </span>
                                 <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="profile_dg.html">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
+                                <form method="POST" action="profil">
+                                    <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
+
+                                    <button class="dropdown-item">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profil
+                                    </button>
+                                </form>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Modifier le mot de passe
@@ -293,122 +279,94 @@ if (isset($_POST['find'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Personal Workspace</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Ajouter un Chef de service</h1>
                     </div>
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Reference</th>
-                                            <th>Titre</th>
-                                            <th>Lien</th>
-                                            <th>Date creation</th>
-                                            <th>Dernier Accées</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($employe as $emp): ?>
-                                            <tr>
-                                                <td>
-                                                    <?php echo $emp['id_doc']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= pathinfo($emp['nom_doc'], PATHINFO_FILENAME); ?>
-                                                </td>
-                                                <td>
-                                                    <a href="<?php echo $emp['lien_acd']; ?>" target="_blank" ?>
-                                                        <?= $emp['nom_doc']; ?>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['date_creation']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['last_accessed']; ?>
-                                                </td>
-                                                <td class="d-flex flex-row">
-
-                                                    <form method="post" action="envoie" class="mr-2">
-                                                        <input type="hidden" name="id_doc"
-                                                            value="<?php echo $emp['id_doc']; ?>">
-                                                        <button class="btn btn-sm btn-success" name="recherch_emp">
-                                                            <i class="fa-solid fa-share-from-square"></i></i>
-                                                            Envoyer
-                                                        </button>
-                                                    </form>
-
-                                                    <form method="post" action="Archive" class="mr-2">
-                                                        <input type="hidden" name="id"
-                                                            value="<?php echo $emp['id_doc']; ?>">
-                                                        <button class="btn btn-sm btn-danger" name="archiver">
-                                                            <i class="fa-solid fa-box-archive"></i>
-                                                            Archiver
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                    <!-- Content Row -->
+                    <div class="container-fluid">
+                        <div class="row" style="width: 105%;margin-left: 4%;">
+                            <div class="col-md-offset-1 col-md-10">
+                                <?php include './views/includes/alert.php' ?>
+                                <div class="container">
+                                    <form class="form" method="post">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-5">
+                                                <label for="structure">Structure :</label>
+                                                <select class="form-control" name="structure" id="structureSelect">
+                                                    <option selected>--Sélectionnez une structure--</option>
+                                                    <?php foreach ($structures as $structure): ?>
+                                                        <option value="<?= $structure['id_structure']; ?>">
+                                                            <?= $structure['nom_structure']; ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-5">
+                                                <label for="service">Service :</label>
+                                                <select name="service" id="serviceSelect"
+                                                    class="dynamic-list form-control">
+                                                    <option selected>--Sélectionnez un service--</option>
+                                                </select>
+                                                <div id="noServiceMessage" style="color: red; display: none;">
+                                                    Aucun service disponible pour la structure sélectionnée.</div>
+                                            </div>
+                                            <div class="form-group col-md-2 mt-4">
+                                                <button type="submit" name="ajouter_adm"
+                                                    class="btn btn-success btn-block">
+                                                    Ajouter Admin
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2021</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Main Content -->
+            <!-- End of Content Wrapper -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pret a quiter l'application ?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                        <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
                     </div>
                 </div>
-            </footer>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
             </div>
         </div>
-    </div>
 
-    <?php
-    include 'includes/script.php';
-    ?>
+        <?php include 'includes/script.php'; ?>
+
 </body>
 
 </html>
