@@ -16,7 +16,8 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard_dg.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                href="<?php echo BASE_URL; ?>Dashboard">
                 <div class="logo-image-small">
                     <img src="assets/img/icon.png" width="60">
                 </div>
@@ -28,9 +29,10 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="dashboard_dg.html">
+                <a class="nav-link" href="<?php echo BASE_URL; ?>Dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -51,8 +53,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
-                        <a class="collapse-item" href="shared_dg.html">Documents Recus</a>
-                        <a class="collapse-item" href="archive_dg.html">Documents Archivés</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>partagedoc">Documents Recus</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>archivedoc">Documents Archivés</a>
                     </div>
                 </div>
             </li>
@@ -610,8 +612,8 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-   <!-- Logout Modal-->
-   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

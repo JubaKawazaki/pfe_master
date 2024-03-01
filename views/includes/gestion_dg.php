@@ -14,11 +14,11 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Chef de service:</h6>
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>addchef">Ajouter Chef de service</a>
-                        <a class="collapse-item" href="#">Liste des Chefs de services</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>listchef">Liste des Chefs de services</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Employées:</h6>
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>addemp">Ajouter Employée</a>
-                        <a class="collapse-item" href="#">Liste des employées</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>listemp">Liste des employées</a>
                     </div>
                 </div>
             </li>

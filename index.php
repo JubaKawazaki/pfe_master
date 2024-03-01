@@ -10,7 +10,11 @@ $pages = [
     'Logout',
     'profil',
     'addemp',
-    'addchef'
+    'addchef',
+    'partagedoc',
+    'archivedoc',
+    'listemp',
+    'listchef'
 ];
 
 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
