@@ -7,7 +7,7 @@ class AdminsController
             $data = array(
                 'id' => $_POST['id'],
                 'mat' => $_POST['mat'],
-                'password' => password_hash($_POST['password'], PASSWORD_DEFAULT), // Vous devriez toujours hacher les mots de passe
+                'password' => $_POST['password'], // Vous devriez toujours hacher les mots de passe
                 'nom' => $_POST['nom'],
                 'prenom' => $_POST['prenom'],
                 'ssn' => $_POST['ssn'],
@@ -42,13 +42,16 @@ class AdminsController
             }
         }
     }
-    public function adduser()
+    public function addusere()
     {
         if (isset($_POST['ajouter_adm'])) {
+            $formattedDate = date('ymd', strtotime($_POST['date_entre']));
+            $incrementalNumber = Employe::getIncrementalNumber();
+
+            $mat = sprintf("%04d%s", $incrementalNumber, $formattedDate);
             $data = array(
-                'id' => $_POST['id'],
-                'mat' => $_POST['mat'],
-                'password' => password_hash($_POST['password'], PASSWORD_DEFAULT), // Vous devriez toujours hacher les mots de passe
+                'mat' => $mat,
+                'password' => $_POST['password'], // Vous devriez toujours hacher les mots de passe
                 'nom' => $_POST['nom'],
                 'prenom' => $_POST['prenom'],
                 'ssn' => $_POST['ssn'],
@@ -64,22 +67,21 @@ class AdminsController
                 'grade' => $_POST['grade'],
                 'qualif' => $_POST['qualif'],
                 'categorie' => $_POST['categorie'],
-                'section' => $_POST['section'],
                 'date_entre' => $_POST['date_entre'],
                 'motif_entre' => $_POST['motif_entre'],
-                'id_service' => $_POST['service'],
+                'id_service' => $_POST['service']
 
-                'id_adm' => $_SESSION['id'] // Utilisez l'ID de l'administrateur actuel
+                // Utilisez l'ID de l'administrateur actuel
             );
 
             $resultat = Admins::addAdmin($data);
 
             if ($resultat == 'ok') {
-                Session::set('success', 'Administrateur ajouté avec succès');
+                Session::set('success', 'Emplpoyer ajouté avec succès');
                 Redirect::to('Listuser');
             } else {
-                Session::set('error', 'Erreur lors de l\'ajout de l\'administrateur');
-                Redirect::to('addAdmin'); // Assurez-vous de rediriger vers la bonne page en cas d'erreur
+                Session::set('error', 'Erreur lors de l\'ajout de l\'employer');
+                Redirect::to('adduser'); // Assurez-vous de rediriger vers la bonne page en cas d'erreur
             }
         }
     }
@@ -123,7 +125,7 @@ class AdminsController
     {
         if (isset($_POST['upd'])) {
             $data = array(
-                'id' => $_POST['id'],
+                'mat' => $_POST['mat'],
                 'nom' => $_POST['nom'],
                 'prenom' => $_POST['prenom'],
                 'ssn' => $_POST['ssn'],
@@ -138,9 +140,10 @@ class AdminsController
                 'grade' => $_POST['grade'],
                 'qualif' => $_POST['qualif'],
                 'categorie' => $_POST['categorie'],
-                'section' => $_POST['section'],
+
                 'date_entre' => $_POST['date_entre'],
                 'motif_entre' => $_POST['motif_entre'],
+
 
                 // Utilisez le champ 'service' pour id_service
             );
@@ -161,7 +164,7 @@ class AdminsController
     {
         if (isset($_POST['upd'])) {
             $data = array(
-                'id' => $_POST['id'],
+                'mat' => $_POST['mat'],
                 'nom' => $_POST['nom'],
                 'prenom' => $_POST['prenom'],
                 'ssn' => $_POST['ssn'],
@@ -176,7 +179,7 @@ class AdminsController
                 'grade' => $_POST['grade'],
                 'qualif' => $_POST['qualif'],
                 'categorie' => $_POST['categorie'],
-                'section' => $_POST['section'],
+
                 'date_entre' => $_POST['date_entre'],
                 'motif_entre' => $_POST['motif_entre'],
                 // Utilisez le champ 'service' pour id_service
@@ -228,6 +231,36 @@ class AdminsController
             Redirect::to('homeAdmins');
         } else {
             echo $res;
+        }
+    }
+    public function getEmployeByServ()
+    {
+
+        if (isset($_POST['service'])) {
+            $id_service = $_POST['service'];
+            $data = array('id_service' => $id_service);
+
+            // Utilisez la fonction existante du modèle pour obtenir les employés du service
+            $employes = Admins::getEmployeByService($data);
+            return $employes;
+
+            // Faites quelque chose avec les employés, par exemple, chargez une vue pour les afficher
+            // Vous pouvez passer les employés à la vue
+        }
+    }
+    public function updatetypeControll()
+    {
+        $data = array();
+        if (isset($_POST['choisir'])) {
+            $mat = $_POST['mat'];
+            $data['mat'] = $mat;
+            $res = Admins::updatetype($data);
+            if ($res) {
+                session::set('success', 'chef bien ajouter');
+            } else {
+                session::set('error', 'chef non ajouter');
+            }
+            Redirect::to('addadmin');
         }
     }
 }

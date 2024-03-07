@@ -256,7 +256,7 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <form method="POST" action="profil">
-                                    <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
+                                    <input type="hidden" name="mat" value="<?= $_SESSION['mat']; ?>">
 
                                     <button class="dropdown-item">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -280,9 +280,10 @@
                 </nav>
                 <!-- End of Topbar -->
                 <?php
-                if (isset($_POST['id'])) {
-                    $data = new EmployesController();
-                    $employe = $data->getOneEmploye();
+                if (isset($_POST['mat'])) {
+
+                    $date = new EmployesController();
+                    $employe = $date->getOneEmploye();
                 }
                 $sx = $employe->sexe;
                 ?>
@@ -312,17 +313,6 @@
                                         }
                                         ?>
                                         <h5 class="my-3"></h5>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">ID</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->id; ?>
-
-                                                </p>
-                                            </div>
-                                        </div>
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <p class="mb-0">Matricule</p>
@@ -560,17 +550,6 @@
                                             <div class="col-sm-8">
                                                 <p class="text-muted mb-0">
                                                     <?= $employe->categorie; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Section</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->section; ?>
                                                 </p>
                                             </div>
                                         </div>

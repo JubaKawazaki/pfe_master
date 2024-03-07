@@ -1,5 +1,4 @@
 <?php
-
 if (isset($_POST['ajouter'])) {
     $doc = new DocumentController();
     $doc::addDocument();
@@ -23,7 +22,7 @@ if (isset($_POST['ajouter'])) {
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un document</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">&times; x</span>
                 </button>
             </div>
             <form method="post" enctype="multipart/form-data">

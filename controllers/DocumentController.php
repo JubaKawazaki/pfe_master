@@ -6,7 +6,6 @@ class DocumentController
     {
 
         if (isset($_POST['ajouter']) && isset($_FILES['dff'])) {
-            $id_createur = $_SESSION['id'];
             $mat_createur = $_SESSION['mat'];
             $size = $_FILES['dff']['size'];
             $file = $_FILES["dff"]["name"];
@@ -19,7 +18,7 @@ class DocumentController
             $file_tmp = $_FILES["dff"]["tmp_name"];
             $file_dest = "Docs/" . $file;
             $data = array(
-                'id_createur' => $id_createur,
+
                 'mat_createur' => $mat_createur,
                 'file_tmp' => $file_tmp,
                 'lien_acd' => $file_dest,
@@ -38,10 +37,9 @@ class DocumentController
     }
     public static function getDocumentsCreate()
     {
-        $id_createur = $_SESSION['id'];
         $mat_createur = $_SESSION['mat'];
         $data = array(
-            'id_createur' => $id_createur,
+
             'mat_createur' => $mat_createur
         );
         $documents = Document::getCreatedDocuments($data);
@@ -49,10 +47,10 @@ class DocumentController
     }
     public static function getDocumentsArchived()
     {
-        $id_createur = $_SESSION['id'];
+
         $mat_createur = $_SESSION['mat'];
         $data = array(
-            'id_createur' => $id_createur,
+
             'mat_createur' => $mat_createur
         );
         $documents = Document::getArchivedDocuments($data);
@@ -64,10 +62,10 @@ class DocumentController
         $data = array();
 
         if (isset($_POST['rech_doc'])) {
-            $id_createur = $_SESSION['id'];
+            $mat_createur = $_SESSION['mat'];
             $rech = $_POST['rech_doc'];
             $data['rech_doc'] = $rech;  // Correction de la clé
-            $data['id_createur'] = $id_createur;  // Correction de la clé
+            $data['mat_createur'] = $mat_createur;  // Correction de la clé
         }
         $documents = Document::recharchdoc($data);
         return $documents;
@@ -116,10 +114,10 @@ class DocumentController
             // Cas 1: Aucun employé sélectionné individuellement
             if (isset($_POST['id_emp'])) {
                 // Envoyer le document uniquement à cet employé
-                $id_emp_recu = $_POST['id_emp'];
+                $mat_emp_recu = $_POST['mat_emp'];
                 $data['id_doc'] = $id_doc;
-                $data['id_emp_recu'] = $id_emp_recu;
-                $data['id_createur'] = $_SESSION['id'];
+                $data['mat_emp_recu'] = $mat_emp_recu;
+                $data['mat_createur'] = $_SESSION['mat'];
                 $res = Document::envoie_doc($data);
 
                 if (!$res) {
@@ -134,8 +132,8 @@ class DocumentController
             // Cas 2: Plusieurs employés sélectionnés
             foreach ($selectedEmployees as $id_emp_recu) {
                 $data['id_doc'] = $id_doc;
-                $data['id_emp_recu'] = $id_emp_recu;
-                $data['id_createur'] = $_SESSION['id'];
+                $data['mat_emp_recu'] = $id_emp_recu;
+                $data['mat_createur'] = $_SESSION['mat'];
                 $res = Document::envoie_doc($data);
 
                 if (!$res) {
@@ -156,12 +154,12 @@ class DocumentController
     public function displayReceivedDocuments()
     {
 
-        $receivedDocuments = Document::getReceivedDocuments($_SESSION['id']);
+        $receivedDocuments = Document::getReceivedDocuments($_SESSION['mat']);
 
         // Ajout de données supplémentaires si nécessaire
         foreach ($receivedDocuments as &$document) {
-            $senderInfo = Document::getSenderInfo($document['id_createur']);
-            $sentDate =  Document::getSentDate($document['id_doc'], $document['id_createur'], $_SESSION['id']);
+            $senderInfo = Document::getSenderInfo($document['mat_createur']);
+            $sentDate =  Document::getSentDate($document['id_doc'], $document['mat_createur'], $_SESSION['mat']);
             $document['sender_name'] = $senderInfo['nom'] . ' ' . $senderInfo['prenom'];
             $document['sent_date'] = $sentDate;
         }
@@ -199,19 +197,36 @@ class DocumentController
             Redirect::to('documents');
         }
     }
+    public function desArchivedoc()
+    {
+        $data = array();
+        if (isset($_POST['desarchive'])) {
+
+            $id_doc = $_POST['id_doc'];
+
+            $data['id_doc'] = $id_doc;
+            $res = Document::desArchive($data);
+            if ($res) {
+                Session::set('success', 'Document bien desArchive.');
+            } else {
+                Session::set('error', 'Document non desArchive.');
+            }
+            Redirect::to('DocumentArchive');
+        }
+    }
     public function nombre_doc_part()
     {
         $data = array();
-        $id = $_SESSION['id'];
-        $data['id'] = $id;
+        $mat = $_SESSION['mat'];
+        $data['mat'] = $mat;
         $nbr = document::nombre_doc_partages($data);
         return $nbr;
     }
     public function nombre_do()
     {
         $data = array();
-        $id = $_SESSION['id'];
-        $data['id'] = $id;
+        $mat = $_SESSION['mat'];
+        $data['mat'] = $mat;
         $nbr = document::nombre_doc($data);
         return $nbr;
     }

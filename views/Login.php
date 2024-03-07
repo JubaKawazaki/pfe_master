@@ -38,10 +38,6 @@ if (isset($_POST['cnx'])) {
               </div>
               <form method="POST">
                 <div class="form-group">
-                  <input type="number" name="id" class="form-control _ge_de_ol" type="text"
-                    placeholder="Entrez votre ID" required="" aria-required="true">
-                </div>
-                <div class="form-group">
                   <input type="number" name="Matricule" class="form-control _ge_de_ol" type="text"
                     placeholder="Entrez votre Matricule" required="" aria-required="true">
                 </div>

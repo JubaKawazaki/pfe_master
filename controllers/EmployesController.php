@@ -11,12 +11,36 @@ class EmployesController
         $structure = Employe::getStructureModele();
         return $structure;
     }
+    public function getSectionControolr()
+    {
+        $section = Employe::getSectionModele();
+        return $section;
+    }
     public function getAllEmployes()
     {
         $id_service =  $_SESSION['id_service'];
-        $id =  $_SESSION['id'];
-        $employes = Employe::getAll($id, $id_service);
+        $mat =  $_SESSION['mat'];
+        $employes = Employe::getAll($mat, $id_service);
         return $employes;
+    }
+    public function getOnsection()
+    {
+        $data = array();
+        $id_service = $_SESSION['id_service'];
+        $data['id_service'] = $id_service;
+        $section = Employe::getSectionModeleOne($data);
+        return $section;
+    }
+    public function getOnsectione()
+    {
+        $data = array();
+
+        if (isset($_POST['updateuse']) or isset($_POST['update'])) {
+            $id_service = $_POST['id_service'];
+            $data['id_service'] = $id_service;
+            $section = Employe::getSectionModeleOne($data);
+            return $section;
+        }
     }
 
 
@@ -27,87 +51,85 @@ class EmployesController
     {
         $data = array();
 
-        if (isset($_POST['id'])) {
-            $id = $_POST['id'];
-            $data['id'] = $id; // Ajoutez 'id' au tableau $data
+        if (isset($_POST['mat'])) {
+            $mat = $_POST['mat'];
+            $data['mat'] = $mat; // Ajoutez 'id' au tableau $data
 
+
+
+            $employ = Employe::getEmployes($data);
+            return $employ;
         }
-
-        $employ = Employe::getEmployes($data);
-        return $employ;
     }
     public function adduser()
     {
         if (isset($_POST['ajouter_Emp'])) {
-            $data = array(
-                'id' => $_POST['id'],
-                'mat' => $_POST['mat'],
-                'password' => $_POST['password'],
-                'nom' => $_POST['nom'],
-                'prenom' => $_POST['prenom'],
-                'ssn' => $_POST['ssn'],
-                'sexe' => $_POST['sexe'],
-                'sf' => $_POST['sf'],
-                'type' => 'user',
-                'date_nais' => $_POST['date_naiss'],
-                'nbr_enft' => $_POST['nbr_enft'],
-                'invalid' => $_POST['invalid'],
-                'status' => $_POST['status'],
-                'position' => $_POST['position'],
-                'grade' => $_POST['grade'],
-                'poste' => $_POST['poste'],
-                'qualif' => $_POST['qualif'],
-                'categorie' => $_POST['categorie'],
-                'section' => $_POST['section'],
-                'date_entre' => $_POST['date_entre'],
-                'motif_entre' => $_POST['motif_entre'],
-                'id_service' => $_SESSION['id_service'],
+            $formattedDate = date('ymd', strtotime($_POST['date_entre']));
+            $incrementalNumber = Employe::getIncrementalNumber();
+            $mat = sprintf("%04d%s", $incrementalNumber, $formattedDate);
 
-                'id_adm' => $_SESSION['id'] // Utilisez l'ID de l'administrateur actuel
-            );
+            $employe = new Employer();
+            $employe->setMat($mat); // Utilisez la fonction de génération de matricule
+            $employe->setPassword($_POST['password']);
+            $employe->setNom($_POST['nom']);
+            $employe->setPrenom($_POST['prenom']);
+            $employe->setSsn($_POST['ssn']);
+            $employe->setSexe($_POST['sexe']);
+            $employe->setSf($_POST['sf']);
+            $employe->setType('user');
+            $employe->setDateNais($_POST['date_naiss']);
+            $employe->setNbrEnft($_POST['nbr_enft']);
+            $employe->setInvalid($_POST['invalid']);
+            $employe->setStatus($_POST['status']);
+            $employe->setPosition($_POST['position']);
+            $employe->setGrade($_POST['grade']);
+            $employe->setPoste($_POST['poste']);
+            $employe->setQualif($_POST['qualif']);
+            $employe->setCategorie($_POST['categorie']);
 
-            $resultat = Employe::addEmp($data);
+            $employe->setDateEntre($_POST['date_entre']);
+            $employe->setMotifEntre($_POST['motif_entre']);
+            $employe->setIdService($_SESSION['id_service']);
 
+            // Appel de la méthode addEmp avec l'objet Employe
+            $resultat = Employe::addEmp($employe);
 
             if ($resultat == 'ok') {
-                Session::set('success', 'Administrateur ajouté avec succès');
+                Session::set('success', 'Employer ajouté avec succès');
                 Redirect::to('home');
             } else {
-                Session::set('error', 'Erreur lors de l\'ajout de l\'administrateur');
+                Session::set('error', 'Erreur lors de l\'ajout de l\'Employer');
                 Redirect::to('addEmp'); // Assurez-vous de rediriger vers la bonne page en cas d'erreur
             }
         }
     }
 
+
     public function update()
     {
         if (isset($_POST['upduser'])) {
-            $data = array(
-                'id' => $_POST['id'],
-                'nom' => $_POST['nom'],
-                'prenom' => $_POST['prenom'],
-                'ssn' => $_POST['ssn'],
-                'sexe' => $_POST['sexe'],
-                'sf' => $_POST['sf'],
-                'date_nais' => $_POST['date_naiss'],
-                'nbr_enft' => $_POST['nbr_enft'],
-                'invalid' => $_POST['invalid'],
-                'status' => $_POST['status'],
-                'position' => $_POST['position'],
-                'poste' => $_POST['poste'],
-                'grade' => $_POST['grade'],
-                'qualif' => $_POST['qualif'],
-                'categorie' => $_POST['categorie'],
-                'section' => $_POST['section'],
-                'date_entre' => $_POST['date_entre'],
-                'motif_entre' => $_POST['motif_entre'],
-                'id_service' => $_POST['service'],
-                'id_structure' => $_POST['structure']
-                // Utilisez le champ 'service' pour id_service
-            );
 
+            $employe = new Employer();
+            $employe->setMat($_POST['mat']);
+            $employe->setIdService($_SESSION['id_service']);
+            $employe->setNom($_POST['nom']);
+            $employe->setPrenom($_POST['prenom']);
+            $employe->setSsn($_POST['ssn']);
+            $employe->setSexe($_POST['sexe']);
+            $employe->setSf($_POST['sf']);
+            $employe->setDateNais($_POST['date_naiss']);
+            $employe->setNbrEnft($_POST['nbr_enft']);
+            $employe->setInvalid($_POST['invalid']);
+            $employe->setStatus($_POST['status']);
+            $employe->setPosition($_POST['position']);
+            $employe->setPoste($_POST['poste']);
+            $employe->setGrade($_POST['grade']);
+            $employe->setQualif($_POST['qualif']);
+            $employe->setCategorie($_POST['categorie']);
+            $employe->setDateEntre($_POST['date_entre']);
+            $employe->setMotifEntre($_POST['motif_entre']);
 
-            $resultat = Employe::edit($data);
+            $resultat = Employe::edit($employe);
 
             if ($resultat == 'ok') {
                 Session::set('success', 'Employé modifié avec succès');
@@ -120,13 +142,13 @@ class EmployesController
     }
 
 
+
     public function deleteemploye()
     {
         $data = array();
 
-        if (isset($_POST['id'])) {
-            $id = $_POST['id'];
-            $data['id'] = $id;
+        if (isset($_POST['mat'])) {
+
             $mat = $_POST['mat'];
             $data['mat'] = $mat;
         }
@@ -162,8 +184,8 @@ class EmployesController
         if (isset($_POST['recherch_emp'])) {
             $data = array();
 
-            $id = $_SESSION['id'];
-            $data['id'] = $id;
+            $mat = $_SESSION['mat'];
+            $data['mat'] = $mat;
             $id_service = $_SESSION['id_service'];
             $data['id_service'] = $id_service;
             $emplo = Employe::getAdminacce($data);
@@ -177,8 +199,8 @@ class EmployesController
         if (isset($_POST['rech'])) {
             $rech = $_POST['rech'];
             $data['rech'] = $rech;
-            $id = $_SESSION['id'];
-            $data['id'] = $id;
+            $mat = $_SESSION['mat'];
+            $data['mat'] = $mat;
             $id_service = $_SESSION['id_service'];
             $data['id_service'] = $id_service;
             $emplo = Employe::getAdminOne($data);
@@ -190,8 +212,8 @@ class EmployesController
         if (isset($_POST['recherch_emp'])) {
             $data = array();
 
-            $id = $_SESSION['id'];
-            $data['id'] = $id;
+            $id = $_SESSION['mat'];
+            $data['mat'] = $id;
             $id_service = $_SESSION['id_service'];
             $data['id_service'] = $id_service;
             $emplo = Employe::getuseracce($data);
@@ -204,12 +226,21 @@ class EmployesController
         if (isset($_POST['rech'])) {
             $rech = $_POST['rech'];
             $data['rech'] = $rech;
-            $id = $_SESSION['id'];
-            $data['id'] = $id;
+            $mat = $_SESSION['mat'];
+            $data['mat'] = $mat;
             $id_service = $_SESSION['id_service'];
             $data['id_service'] = $id_service;
             $emplo = Employe::getuserOne($data);
             return $emplo;
         }
+    }
+    public function changepasswordcontroller()
+    {
+        $data = array();
+        $data['ancpwd'] = $_POST['oldPassword'];
+        $data['nvpwd'] = $_POST['newPassword'];
+        $data['id'] = $_SESSION['id'];
+        $reponse = Employe::changepasswords($data);
+        return $reponse;
     }
 }

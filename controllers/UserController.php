@@ -4,24 +4,25 @@ class UserController
     public function cnx()
     {
         if (isset($_POST['cnx'])) {
-            $id = $_POST['id'];
+
             $mat = $_POST['Matricule'];
             $password = $_POST['password']; // Utilisez MD5 pour le mot de passe
 
-            $data['id'] = $id;
+
             $data['mat'] = $mat;
 
-            $res = User::login($data);
+            $res = User::logine($data);
 
             if (
-                $res->id === $_POST['id'] &&
+
                 $res->mat === $_POST['Matricule'] &&
                 $res->password === $password
 
             ) {
                 // Authentification réussie
                 $_SESSION['logged'] = true;
-                $_SESSION['id'] = $res->id;
+
+                $_SESSION['username'] = $res->nom;
                 $_SESSION['nom'] = $res->nom;
                 $_SESSION['prenom'] = $res->prenom;
                 $_SESSION['mat'] = $res->mat;
@@ -33,14 +34,40 @@ class UserController
             } else {
                 // Mot de passe incorrect
                 Session::set('error', 'Mot de passe ou identifiant incorrect');
-                Redirect::to('Login');
+                Redirect::to('login');
             }
         }
     }
 
+
+    public function Register()
+    {
+        if (isset($_POST['register'])) {
+            $option = [
+                'cost' => 12
+            ];
+            $password = password_hash(
+                $_POST['password'],
+                PASSWORD_BCRYPT,
+                $option
+            );
+            $data = array(
+                'fullname' => $_POST['fullname'],
+                'username' => $_POST['username'],
+                'password' => $password
+
+            );
+            $resulats = User::createUser($data);
+            if ($resulats == 'ok') {
+                Session::set('success', 'compte user crée ');
+                Redirect::to('login');
+            } else {
+                echo $resulats;
+            }
+        }
+    }
     public function deco()
     {
         session_destroy();
     }
-
 }

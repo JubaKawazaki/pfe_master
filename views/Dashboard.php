@@ -256,7 +256,7 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <form method="POST" action="profil">
-                                    <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
+                                    <input type="hidden" name="mat" value="<?= $_SESSION['mat']; ?>">
 
                                     <button class="dropdown-item">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
