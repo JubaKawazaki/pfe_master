@@ -68,18 +68,23 @@
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Demandes Recus</a>
-                        <a class="collapse-item" href="#">Demandes Validés</a>
-                        <a class="collapse-item" href="#">Demande Refusés</a>
-                    </div>
+                    <?php
+
+                    $type = $_SESSION['type'];
+
+                    if ($type === 'user') {
+                        include 'includes/dmndemp.php';
+                    } else {
+                        include 'includes/dmnd.php';
+                    }
+
+                    ?>
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             <?php
-            $type = $_SESSION['type'];
 
             if ($type === 'Administrateur') {
                 include 'includes/gestion_dg.php';
@@ -279,6 +284,7 @@
                     $data = new EmployesController();
                     $employe = $data->getOneEmploye();
                 }
+                $sx = $employe->sexe;
                 ?>
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -293,8 +299,18 @@
                             <div class="col-lg-4">
                                 <div class="card mb-4">
                                     <div class="card-body text-center">
-                                        <img src="assets/img/ava3.PNG" alt="avatar" class="rounded-circle img-fluid"
-                                            style="width: 175px;">
+                                        <?php
+                                        if ($sx == "Homme" || $sx == "homme") {
+                                            ?>
+                                            <img src="assets/img/avatar_homme.svg" alt="avatar"
+                                                class="rounded-circle img-fluid" style="width: 175px;">
+                                            <?php
+                                        } else { ?>
+                                            <img src="assets/img/avatar_femme.svg" alt="avatar"
+                                                class="rounded-circle img-fluid" style="width: 175px;">
+                                            <?php
+                                        }
+                                        ?>
                                         <h5 class="my-3"></h5>
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -303,6 +319,7 @@
                                             <div class="col-sm-8">
                                                 <p class="text-muted mb-0">
                                                     <?= $employe->id; ?>
+
                                                 </p>
                                             </div>
                                         </div>

@@ -14,7 +14,8 @@ $pages = [
     'partagedoc',
     'archivedoc',
     'listemp',
-    'listchef'
+    'listchef',
+    'conge'
 ];
 
 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {

@@ -23,5 +23,19 @@
                 </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesTwo"
+                    aria-expanded="true" aria-controls="collapsePagesTwo">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Structure</span>
+                </a>
+                <div id="collapsePagesTwo" class="collapse" aria-labelledby="headingPagesTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>addchef">Ajouter un service</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>listchef">Liste un departement</a>
+                    </div>
+                </div>
+            </li>
+            
             <!-- Divider -->
             <hr class="sidebar-divider">

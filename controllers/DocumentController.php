@@ -17,7 +17,7 @@ class DocumentController
             }
 
             $file_tmp = $_FILES["dff"]["tmp_name"];
-            $file_dest = "image/" . $file;
+            $file_dest = "Docs/" . $file;
             $data = array(
                 'id_createur' => $id_createur,
                 'mat_createur' => $mat_createur,

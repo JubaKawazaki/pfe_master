@@ -13,7 +13,7 @@ if (isset($_POST['find'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
@@ -67,7 +67,7 @@ if (isset($_POST['find'])) {
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>partagedoc">Documents Recus</a>
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>archivedoc">Documents Archivés</a>
                     </div>
@@ -83,18 +83,23 @@ if (isset($_POST['find'])) {
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Demandes Recus</a>
-                        <a class="collapse-item" href="#">Demandes Validés</a>
-                        <a class="collapse-item" href="#">Demande Refusés</a>
-                    </div>
+                    <?php
+
+                    $type = $_SESSION['type'];
+
+                    if ($type === 'user') {
+                        include 'includes/dmndemp.php';
+                    } else {
+                        include 'includes/dmnd.php';
+                    }
+
+                    ?>
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             <?php
-            $type = $_SESSION['type'];
 
             if ($type === 'Administrateur') {
                 include 'includes/gestion_dg.php';
@@ -259,7 +264,7 @@ if (isset($_POST['find'])) {
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                     <?php echo $_SESSION['nom'] . '   ' . $_SESSION['prenom']; ?>
@@ -300,6 +305,11 @@ if (isset($_POST['find'])) {
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Personal Workspace</h1>
+                        <div>
+                            <?php
+                            include "includes/ajoutdoc.php";
+                            ?>
+                        </div>
                     </div>
 
                     <!-- DataTales Example -->
@@ -398,15 +408,15 @@ if (isset($_POST['find'])) {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Pret a quiter l'application ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">X</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
                 </div>
             </div>
         </div>

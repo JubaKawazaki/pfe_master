@@ -80,18 +80,23 @@ if (isset($_POST['find'])) {
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Demandes Recus</a>
-                        <a class="collapse-item" href="#">Demandes Validés</a>
-                        <a class="collapse-item" href="#">Demande Refusés</a>
-                    </div>
+                    <?php
+
+                    $type = $_SESSION['type'];
+
+                    if ($type === 'user') {
+                        include 'includes/dmndemp.php';
+                    } else {
+                        include 'includes/dmnd.php';
+                    }
+
+                    ?>
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             <?php
-            $type = $_SESSION['type'];
 
             if ($type === 'Administrateur') {
                 include 'includes/gestion_dg.php';
@@ -356,9 +361,9 @@ if (isset($_POST['find'])) {
                                                         </button>
                                                     </form>
                                                     <form method="post" action="profil" class="mr-2">
-                                                    <input type="hidden" name="id" value="<?php echo $emp['id']; ?>">
+                                                        <input type="hidden" name="id" value="<?php echo $emp['id']; ?>">
                                                         <button class="btn btn-sm btn-info" e="delete">
-                                                        <i class="fa fa-info"></i> 
+                                                            <i class="fa fa-info"></i>
                                                             Details
                                                         </button>
                                                     </form>

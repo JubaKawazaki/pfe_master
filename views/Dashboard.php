@@ -16,7 +16,8 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo BASE_URL; ?>Dashboard">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                href="<?php echo BASE_URL; ?>Dashboard">
                 <div class="logo-image-small">
                     <img src="assets/img/icon.png" width="60">
                 </div>
@@ -64,20 +65,26 @@
                     <i class="fas fa-fw fa-file"></i>
                     <span>Demandes</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Demandes Recus</a>
-                        <a class="collapse-item" href="#">Demandes Validés</a>
-                        <a class="collapse-item" href="#">Demande Refusés</a>
-                    </div>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+
+                    <?php
+
+                    $type = $_SESSION['type'];
+
+                    if ($type === 'user') {
+                        include 'includes/dmndemp.php';
+                    } else {
+                        include 'includes/dmnd.php';
+                    }
+
+                    ?>
+                    
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             <?php
-            $type = $_SESSION['type'];
 
             if ($type === 'Administrateur') {
                 include 'includes/gestion_dg.php';

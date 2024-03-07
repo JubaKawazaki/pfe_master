@@ -1,24 +1,9 @@
-<?php
-
-$type = $_SESSION['type'];
-if (isset($_POST['find'])) {
-    $date = new DocumentController();
-    $employe = $date->findDocRecu();
-} else {
-    $date = new DocumentController();
-    $employe = $date->displayReceivedDocuments();
-}
-
-?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
 
-    <?php
-    include 'includes/header.php';
-    ?>
+    <?php include 'includes/header.php'; ?>
 
 </head>
 
@@ -46,8 +31,7 @@ if (isset($_POST['find'])) {
             <li class="nav-item active">
                 <a class="nav-link" href="<?php echo BASE_URL; ?>Dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
+                    <span>Dashboard</span></a>
             </li>
 
             <!-- Divider -->
@@ -68,8 +52,8 @@ if (isset($_POST['find'])) {
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
-                        <a class="collapse-item" href="<?php echo BASE_URL; ?>partagedoc">Documents Recus</a>
-                        <a class="collapse-item" href="<?php echo BASE_URL; ?>archivedoc">Documents Archivés</a>
+                        <a class="collapse-item" href="shared_dg.html">Documents Recus</a>
+                        <a class="collapse-item" href="archive_dg.html">Documents Archivés</a>
                     </div>
                 </div>
             </li>
@@ -83,18 +67,23 @@ if (isset($_POST['find'])) {
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Demandes Recus</a>
-                        <a class="collapse-item" href="#">Demandes Validés</a>
-                        <a class="collapse-item" href="#">Demande Refusés</a>
-                    </div>
+                    <?php
+
+                    $type = $_SESSION['type'];
+
+                    if ($type === 'user') {
+                        include 'includes/dmndemp.php';
+                    } else {
+                        include 'includes/dmnd.php';
+                    }
+
+                    ?>
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             <?php
-            $type = $_SESSION['type'];
 
             if ($type === 'Administrateur') {
                 include 'includes/gestion_dg.php';
@@ -107,10 +96,6 @@ if (isset($_POST['find'])) {
             }
 
             ?>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="edit.html">
@@ -299,66 +284,68 @@ if (isset($_POST['find'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Archives</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Demande de congé</h1>
                     </div>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Reference</th>
-                                            <th>Titre</th>
-                                            <th>Lien</th>
-                                            <th>Nom de l'expéditeur</th>
-                                            <th>Date de reception</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($employe as $emp): ?>
-                                            <tr>
-                                                <td>
-                                                    Ref_
-                                                    <?php echo $emp['id_doc']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= pathinfo($emp['nom_doc'], PATHINFO_FILENAME); ?>
-                                                </td>
-                                                <td>
-                                                    <a href="<?php echo $emp['lien_acd']; ?>" target="_blank" ?>
-                                                        <?= $emp['nom_doc']; ?>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <?php echo $emp['sender_name']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['sent_date']; ?>
-                                                </td>
-                                                <td class="d-flex flex-row">
-
-                                                    <form method="post" action="#" class="mr-2">
-                                                        <input type="hidden" name="id_doc"
-                                                            value="<?php echo $emp['id_doc']; ?>">
-                                                        <button class="btn btn-sm btn-warning" name="desarchiver">
-                                                            <i class="fa-solid fa-file-archive"></i></i>
-                                                            Désarchiver
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                    <!-- Content Row -->
+                    <div class="container-fluid">
+                        <div class="row" style="width: 105%;margin-left: 4%;">
+                            <div class="col-md-offset-1 col-md-10">
+                                <div class="container">
+                                    <form class="form">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label for="inputEmail4">Nom</label>
+                                                <input type="email" class="form-control" value="<?php echo $_SESSION['nom']; ?>" disabled >
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputPassword4">Prenom</label>
+                                                <input type="text" class="form-control" value="<?php echo $_SESSION['prenom']; ?>" disabled >
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                                <label for="inputPassword4">Structure</label>
+                                                <input type="text" name="str" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputPassword4">Servive</label>
+                                                <input type="text" name="drct" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputEmail4">Poste</label>
+                                                <input type="text" name="fct" class="form-control">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label for="inputCity">Motif du congé</label>
+                                                <select name="#" class="form-control">
+                                                    <option selected>Choose...</option>
+                                                    <option>...</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputState">Nombre de jours</label>
+                                                <input type="number" name="nbr_jrs" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="inputZip">Date de debut</label>
+                                                <input type="date" name="date_debut" class="form-control">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <input type="submit" name="#" value="Envoyer la demande"
+                                            class="btn btn-info btn-lg btn-block">
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
+
 
             </div>
             <!-- End of Main Content -->
@@ -404,9 +391,8 @@ if (isset($_POST['find'])) {
         </div>
     </div>
 
-    <?php
-    include 'includes/script.php';
-    ?>
+    <?php include 'includes/script.php'; ?>
+
 </body>
 
 </html>

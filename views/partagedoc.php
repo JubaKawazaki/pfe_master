@@ -66,7 +66,7 @@ if (isset($_POST['find'])) {
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>partagedoc">Documents Recus</a>
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>archivedoc">Documents Archivés</a>
                     </div>
@@ -82,18 +82,23 @@ if (isset($_POST['find'])) {
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Demandes Recus</a>
-                        <a class="collapse-item" href="#">Demandes Validés</a>
-                        <a class="collapse-item" href="#">Demande Refusés</a>
-                    </div>
+                    <?php
+
+                    $type = $_SESSION['type'];
+
+                    if ($type === 'user') {
+                        include 'includes/dmndemp.php';
+                    } else {
+                        include 'includes/dmnd.php';
+                    }
+
+                    ?>
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             <?php
-            $type = $_SESSION['type'];
 
             if ($type === 'Administrateur') {
                 include 'includes/gestion_dg.php';
@@ -298,7 +303,7 @@ if (isset($_POST['find'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Personal Workspace</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Shared Workspace</h1>
                     </div>
 
                     <!-- DataTales Example -->
@@ -320,7 +325,8 @@ if (isset($_POST['find'])) {
                                         <?php foreach ($employe as $emp): ?>
                                             <tr>
                                                 <td>
-                                                    Ref_<?php echo $emp['id_doc']; ?>
+                                                    Ref_
+                                                    <?php echo $emp['id_doc']; ?>
                                                 </td>
                                                 <td>
                                                     <?= pathinfo($emp['nom_doc'], PATHINFO_FILENAME); ?>
@@ -331,10 +337,10 @@ if (isset($_POST['find'])) {
                                                     </a>
                                                 </td>
                                                 <td>
-                                                <?php echo $emp['sender_name']; ?>
+                                                    <?php echo $emp['sender_name']; ?>
                                                 </td>
                                                 <td>
-                                                <?= $emp['sent_date']; ?>
+                                                    <?= $emp['sent_date']; ?>
                                                 </td>
                                                 <td class="d-flex flex-row">
 
@@ -391,21 +397,21 @@ if (isset($_POST['find'])) {
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+   <!-- Logout Modal-->
+   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Pret a quiter l'application ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">X</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
                 </div>
             </div>
         </div>
