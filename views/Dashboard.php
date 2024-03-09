@@ -65,20 +65,21 @@
                     <i class="fas fa-fw fa-file"></i>
                     <span>Demandes</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
 
                     <?php
 
                     $type = $_SESSION['type'];
 
-                    if ($type === 'user') {
+                    if ($type === 'user' || $type === 'admin') {
                         include 'includes/dmndemp.php';
                     } else {
                         include 'includes/dmnd.php';
                     }
 
                     ?>
-                    
+
                 </div>
             </li>
 

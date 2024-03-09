@@ -1,5 +1,22 @@
+<?php
+
+$date = new EmployesController();
+$emp = $date->getOneEmploye();
+if (isset($_POST['upd'])) {
+    if ($emp->type === 'admin') {
+        $date = new AdminsController();
+        $empp = $date->updateADMS();
+    }
+    if ($emp->type === 'user') {
+        $date = new AdminsController();
+        $empp = $date->updateADMSEMP();
+    }
+}
+
+?>
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
 
@@ -52,8 +69,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
-                        <a class="collapse-item" href="shared_dg.html">Documents Recus</a>
-                        <a class="collapse-item" href="archive_dg.html">Documents Archivés</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>partagedoc">Documents Recus</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>archivedoc">Documents Archivés</a>
                     </div>
                 </div>
             </li>
@@ -255,7 +272,7 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <form method="POST" action="profil">
-                                    <input type="hidden" name="mat" value="<?= $_SESSION['mat']; ?>">
+                                    <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
 
                                     <button class="dropdown-item">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -284,63 +301,247 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Demande de congé</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Mettre a jour les informations d'un Employé</h1>
                     </div>
 
                     <!-- Content Row -->
                     <div class="container-fluid">
                         <div class="row" style="width: 105%;margin-left: 4%;">
                             <div class="col-md-offset-1 col-md-10">
+                                <?php include './views/includes/alert.php' ?>
                                 <div class="container">
-                                    <form class="form">
+                                    <form class="form" method="post">
+                                        <input type="hidden" id="mat" value="<?= $emp->mat; ?>" name="mat" required>
+                                        <h4><strong>Identification</strong></h4>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Nom</label>
-                                                <input type="email" class="form-control"
-                                                    value="<?php echo $_SESSION['nom']; ?>" disabled>
+                                                <label>Matricule</label>
+                                                <input type="number" id="mat" name="mat" value="<?= $emp->mat; ?>"
+                                                    class="form-control" >
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Prenom</label>
-                                                <input type="text" class="form-control"
-                                                    value="<?php echo $_SESSION['prenom']; ?>" disabled>
+                                                <label>SSN</label>
+                                                <select name="ssn" id="ssn" class="form-control" >
+                                                    <option value="oui" <?php if ($emp->ssn == 'oui')
+                                                        echo 'selected'; ?>>
+                                                        Oui</option>
+                                                    <option value="non" <?php if ($emp->ssn == 'non')
+                                                        echo 'selected'; ?>>
+                                                        Non</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Structure</label>
-                                                <input type="text" name="str" class="form-control">
+                                                <label>Nom</label>
+                                                <input type="text" id="nom" name="nom" value="<?= $emp->nom; ?>"
+                                                    class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Servive</label>
-                                                <input type="text" name="drct" class="form-control">
+                                                <label>Prenom</label>
+                                                <input type="text" id="prenom" name="prenom" value="<?= $emp->prenom; ?>"
+                                                    class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Poste</label>
-                                                <input type="text" name="fct" class="form-control"
-                                                    value="<?php echo $_SESSION['poste']; ?>" disabled>
+                                                <label>Sexe</label>
+                                                <select id="sexe" name="sexe" class="form-control">
+                                                    <option value="homme" <?php if ($emp->sexe == 'homme' || $emp->sexe == 'Homme')
+                                                        echo 'selected'; ?>>Homme</option>
+                                                    <option value="femme" <?php if ($emp->sexe == 'femme' || $emp->sexe == 'Femme')
+                                                        echo 'selected'; ?>>Femme</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>Date de naissance</label>
+                                                <input type="date" id="date_naiss" name="date_naiss" class="form-control"
+                                                    value="<?= $emp->date_nais; ?>">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Situation Familliale</label>
+                                                <select name="sf" id="sf" class="form-control">
+                                                    <option value="celibataire" <?php if ($emp->sf == 'celibataire')
+                                                        echo 'selected'; ?>>Célibataire</option>
+                                                    <option value="Marié(e)" <?php if ($emp->sf == 'Marié(e)')
+                                                        echo 'selected'; ?>>Marié(e)</option>
+                                                    <option value="divorce" <?php if ($emp->sf == 'divorce')
+                                                        echo 'selected'; ?>>Divorcé(e)</option>
+                                                    <option value="veuf" <?php if ($emp->sf == 'veuf')
+                                                        echo 'selected'; ?>>Veuf/Veuve</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Nombre d'enfants</label>
+                                                <input type="number" id="nbr_enft" name="nbr_enft" class="form-control"
+                                                    value="<?= $emp->nbr_enft; ?>">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Invalidité</label>
+                                                <input type="text" id="invalid" name="invalid" class="form-control"
+                                                    value="<?= $emp->invalid; ?>">
                                             </div>
                                         </div>
 
+                                        <h4><strong>Status</strong></h4>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputCity">Motif du congé</label>
-                                                <select name="#" class="form-control">
-                                                    <option selected>Choose...</option>
+                                                <label>Status</label>
+                                                <select name="status" id="status" class="form-control">
+                                                    <option selected>
+                                                        <?= $emp->status; ?>
+                                                    </option>
+                                                    <option value="Mensuel">Mensuel</option>
+                                                    <option value="Horaire">Horaire</option>
+                                                    <option value="Journalier">Journalier</option>
+                                                    <option value="Expatrier">Expatrier</option>
+                                                    <option value="Forfait">Forfait</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Position</label>
+                                                <select name="position" id="position" class="form-control">
+                                                    <option selected>
+                                                        <?= $emp->position; ?>
+                                                    </option>
+                                                    <option value="Actif">Actif</option>
+                                                    <option value="Bloqué">Bloqué</option>
+                                                    <option value="Retraite">Retraite</option>
+                                                    <option value="Congé">Congé</option>
+                                                    <option value="Démission">Démission</option>
+                                                    <option value="Licenciment">Licenciment</option>
+                                                    <option value="Mise_a_pied">Mise a pied</option>
+                                                    <option value="Mtation">Mutation</option>
+                                                    <option value="Fin_de_contrat">Fin de contrat</option>
+                                                    <option value="Abondon_de_poste">Abondon de poste</option>
+                                                    <option value="Décé">Décé</option>
+                                                    <option value="Invalide">Invalide</option>
+                                                    <option value="Suspendu">Suspendu</option>
+                                                    <option value="Congé_maladie">Congé maladie</option>
+                                                    <option value="Congé_maternité">Congé maternité</option>
+                                                    <option value="Congé_special">Congé special</option>
+                                                    <option value="Mise_en_disponibilité">Mise en disponibilité</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Structure</label>
+                                                <select name="structure" id="structure" class="form-control">
+                                                    <option selected>
+                                                        <?= $emp->nom_structure; ?>
+                                                    </option>
+                                                    <option value="Echantillotheque">Echantillotheque</option>
+                                                    <option value="Magasin piece rechange">Magasin piece rechange
+                                                    </option>
+                                                    <option value="Magasin moyens généraux">Magasin moyens généraux
+                                                    </option>
+                                                    <option value="Magasin reactif/vereries">Magasin reactif/vereries
+                                                    </option>
+                                                    <option value="Camptine">Camptine</option>
+                                                    <option value="Medecine du travail">Medecine du travail</option>
+                                                    <option value="Assurance qualité">Assurance qualité</option>
+                                                    <option value="Direction site de production">Direction site de
+                                                        production</option>
+                                                    <option value="Sous-direction de production">Sous-direction de
+                                                        production</option>
+                                                    <option value="Imprimerie">Imprimerie</option>
+                                                    <option value="Hygiene">Hygiene</option>
+                                                    <option value="Administration">Administration</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>Service</label>
+                                                <select name="service" id="service" class="form-control">
+                                                    <option selected>
+                                                        <?= $emp->nom_service; ?>
+                                                    </option>
                                                     <option>...</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputState">Nombre de jours</label>
-                                                <input type="number" name="nbr_jrs" class="form-control">
+                                                <label>Poste</label>
+                                                <select name="poste" id="poste" class="form-control">
+                                                    <option selected>
+                                                        <?= $emp->poste; ?>
+                                                    </option>
+                                                    <option>...</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>Qualification</label>
+                                                <select name="qualif" id="qualif" class="form-control">
+                                                    <option selected>
+                                                        <?= $emp->qualif; ?>
+                                                    </option>
+                                                    <option value="BAC">BAC</option>
+                                                    <option value="Licence">Licence</option>
+                                                    <option value="Master">Master</option>
+                                                    <option value="Doctorat">Doctorat</option>
+                                                    <option value="PhD">PhD</option>
+                                                    <option value="Technicien_Superieur">Technicien Superieur</option>
+                                                    <option value="Ingenieur">Ingenieur</option>
+                                                    <option value="Aucun">Aucun</option>
+                                                </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputZip">Date de debut</label>
-                                                <input type="date" name="date_debut" class="form-control">
+                                                <label>Grade</label>
+                                                <select name="grade" id="grade" class="form-control">
+                                                    <option selected>
+                                                        <?= $emp->grade; ?>
+                                                    </option>
+                                                    <option value="Execution">Execution</option>
+                                                    <option value="Maitrise">Maitrise</option>
+                                                    <option value="Cadre">Cadre</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Categorie</label>
+                                                <select name="categorie" id="categorie" class="form-control">
+                                                    <option selected>
+                                                        <?= $emp->categorie; ?>
+                                                    </option>
+                                                    <option value="e1">E1</option>
+                                                    <option value="e2">E2</option>
+                                                    <option value="e3">E3</option>
+                                                    <option value="e4">E4</option>
+                                                    <option value="e5">E5</option>
+                                                    <option value="e6">E6</option>
+                                                    <option value="e7">E7</option>
+                                                    <option value="m1">M1</option>
+                                                    <option value="m2">M2</option>
+                                                    <option value="m3">M3</option>
+                                                    <option value="m4">M4</option>
+                                                    <option value="m5">M5</option>
+                                                    <option value="m6">M6</option>
+                                                    <option value="m7">M7</option>
+                                                    <option value="c1">C1</option>
+                                                    <option value="c2">C2</option>
+                                                    <option value="c3">C3</option>
+                                                    <option value="c4">C4</option>
+                                                    <option value="c5">C5</option>
+                                                    <option value="c6">C6</option>
+                                                    <option value="c7">C7</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-5">
+                                                <label>Date d'entrée</label>
+                                                <input type="date" id="date_entre" name="date_entre" value="<?= $emp->date_entre; ?>"
+                                                    name="date_entre" class="form-control" >
+                                            </div>
+                                            <div class="form-group col-md-5">
+                                                <label>Motif d'entrée</label>
+                                                <input type="text" id="motif_entre" name="motif_entre" value="<?= $emp->motif_entre; ?>"
+                                                    class="form-control" >
                                             </div>
                                         </div>
                                         <br>
-                                        <input type="submit" name="#" value="Envoyer la demande"
-                                            class="btn btn-info btn-lg btn-block">
+                                        <button type="submit" name="upd" class="btn btn-info btn-lg btn-block">Valider les modifications</button>
                                     </form>
                                 </div>
                             </div>

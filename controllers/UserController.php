@@ -29,6 +29,7 @@ class UserController
                 $_SESSION['type'] = $res->type;
                 $_SESSION['id_adm'] = $res->id_adm;
                 $_SESSION['id_service'] = $res->id_service;
+                $_SESSION['poste'] = $res->poste;
 
                 Redirect::to('Dashboard');
             } else {

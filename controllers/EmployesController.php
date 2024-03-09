@@ -55,8 +55,6 @@ class EmployesController
             $mat = $_POST['mat'];
             $data['mat'] = $mat; // Ajoutez 'id' au tableau $data
 
-
-
             $employ = Employe::getEmployes($data);
             return $employ;
         }

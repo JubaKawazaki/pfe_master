@@ -15,7 +15,12 @@ $pages = [
     'archivedoc',
     'listemp',
     'listchef',
-    'conge'
+    'conge',
+    'dmnd',
+    'dmndV',
+    'dmndR',
+    'detail',
+    'update'
 ];
 
 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
