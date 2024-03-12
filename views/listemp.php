@@ -84,7 +84,7 @@ if (isset($_POST['find'])) {
 
                     $type = $_SESSION['type'];
 
-                    if ($type === 'user') {
+                    if ($type === 'user' || $type === 'admin') {
                         include 'includes/dmndemp.php';
                     } else {
                         include 'includes/dmnd.php';
@@ -272,7 +272,7 @@ if (isset($_POST['find'])) {
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <form method="POST" action="profil">
-                                    <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
+                                    <input type="hidden" name="mat" value="<?= $_SESSION['mat']; ?>">
 
                                     <button class="dropdown-item">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -346,6 +346,7 @@ if (isset($_POST['find'])) {
                                                     <form method="post" action="update" class="mr-2">
                                                         <input type="hidden" name="id_service"
                                                             value="<?= $emp['id_service']; ?>">
+
                                                         <input type="hidden" name="mat" value="<?php echo $emp['mat']; ?>">
                                                         <button class="btn btn-sm btn-success" name="update">
                                                             <i class="fa fa-edit"></i>
@@ -361,14 +362,13 @@ if (isset($_POST['find'])) {
                                                             Archiver
                                                         </button>
                                                     </form>
-                                                    <form method="post" action="#" class="mr-2">
+                                                    <form method="post" action="detail" class="mr-2">
                                                         <input type="hidden" name="mat" value="<?php echo $emp['mat']; ?>">
                                                         <input type="hidden" name="sx" value="<?php echo $emp['sexe']; ?>">
-                                                        <a class="btn btn-sm btn-info" name="details" data-toggle="modal"
-                                                            data-target="#detailsModal">
+                                                        <button class="btn btn-sm btn-info" name="details">
                                                             <i class="fa fa-info"></i>
                                                             Details
-                                                        </a>
+                                                        </button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -412,315 +412,15 @@ if (isset($_POST['find'])) {
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Pret a quiter l'application ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">X</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <?php
-    if (isset($_POST['details'])) {
-        $date = new EmployesController();
-        $employe = $date->getOneEmploye();
-    }
-    $sx = $_POST['sx'];
-    ?>
-
-    <!-- details Modal-->
-    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModal">Information de l'employer</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                <div class="container py-5">
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="card mb-4">
-                                    <div class="card-body text-center">
-                                            <img src="assets/img/avatar_mono.svg" alt="avatar"
-                                                class="rounded-circle img-fluid" style="width: 175px;">
-                                        <h5 class="my-3"></h5>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Matricule</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->mat; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Nom Prenom</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->nom . ' ' . $employe->prenom; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Email</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0">example@example.com</p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Telephone</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0">(097) 234-5678</p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Mobile</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0">(098) 765-4321</p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-3">
-                                                <p class="mb-0">Address</p>
-                                            </div>
-                                            <div class="col-sm-9">
-                                                <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-around">
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div>
-                                        <br>
-                                        <center>
-                                            <h4>Identification</h4>
-                                        </center>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Sexe</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->sexe; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Date naissance</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->date_nais; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">SSN</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->ssn; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Situation familaile</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->sf; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Nombre d'enfants</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->nbr_enft; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Invalidité</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->invalid; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
-                                    <div>
-                                        <br>
-                                        <center>
-                                            <h4>Status</h4>
-                                        </center>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Status</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->status; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Position</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->position; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Structure</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->section; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Service</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->id_service; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Poste</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->poste; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Grade</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->grade; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Qualification</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->qualif; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Categorie</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->categorie; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Date d'entrée</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->date_entre; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <p class="mb-0">Motif d'entrée</p>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <p class="text-muted mb-0">
-                                                    <?= $employe->motif_entre; ?>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
                 </div>
             </div>
         </div>

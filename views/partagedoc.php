@@ -86,7 +86,7 @@ if (isset($_POST['find'])) {
 
                     $type = $_SESSION['type'];
 
-                    if ($type === 'user') {
+                    if ($type === 'user' || $type === 'admin') {
                         include 'includes/dmndemp.php';
                     } else {
                         include 'includes/dmnd.php';
@@ -274,7 +274,7 @@ if (isset($_POST['find'])) {
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <form method="POST" action="profil">
-                                    <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
+                                    <input type="hidden" name="mat" value="<?= $_SESSION['mat']; ?>">
 
                                     <button class="dropdown-item">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -397,8 +397,8 @@ if (isset($_POST['find'])) {
         <i class="fas fa-angle-up"></i>
     </a>
 
-   <!-- Logout Modal-->
-   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

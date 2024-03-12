@@ -72,7 +72,7 @@
 
                     $type = $_SESSION['type'];
 
-                    if ($type === 'user') {
+                    if ($type === 'user' || $type === 'admin') {
                         include 'includes/dmndemp.php';
                     } else {
                         include 'includes/dmnd.php';
@@ -494,7 +494,7 @@
                                             </div>
                                             <div class="col-sm-8">
                                                 <p class="text-muted mb-0">
-                                                    <?= $employe->section; ?>
+                                                <?= $employe->nom_structure; ?>
                                                 </p>
                                             </div>
                                         </div>

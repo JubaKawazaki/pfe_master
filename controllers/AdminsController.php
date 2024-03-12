@@ -35,10 +35,10 @@ class AdminsController
 
             if ($resultat == 'ok') {
                 Session::set('success', 'Administrateur ajouté avec succès');
-                Redirect::to('homeAdmins');
+                Redirect::to('Dashbaord');
             } else {
                 Session::set('error', 'Erreur lors de l\'ajout de l\'administrateur');
-                Redirect::to('addAdmin'); // Assurez-vous de rediriger vers la bonne page en cas d'erreur
+                Redirect::to('addchef'); // Assurez-vous de rediriger vers la bonne page en cas d'erreur
             }
         }
     }
@@ -78,10 +78,10 @@ class AdminsController
 
             if ($resultat == 'ok') {
                 Session::set('success', 'Emplpoyer ajouté avec succès');
-                Redirect::to('Listuser');
+                Redirect::to('listemp');
             } else {
                 Session::set('error', 'Erreur lors de l\'ajout de l\'employer');
-                Redirect::to('adduser'); // Assurez-vous de rediriger vers la bonne page en cas d'erreur
+                Redirect::to('addemp'); // Assurez-vous de rediriger vers la bonne page en cas d'erreur
             }
         }
     }
@@ -153,7 +153,7 @@ class AdminsController
 
             if ($resultat == 'ok') {
                 Session::set('success', 'Employé modifié avec succès');
-                Redirect::to('homeAdmins');
+                Redirect::to('Dashboard');
             } else {
                 Session::set('error', 'Erreur lors de la modification de l\'employé');
                 Redirect::to('update');
@@ -190,7 +190,7 @@ class AdminsController
 
             if ($resultat == 'ok') {
                 Session::set('success', 'Employé modifié avec succès');
-                Redirect::to('Listuser');
+                Redirect::to('listemp');
             } else {
                 Session::set('error', 'Erreur lors de la modification de l\'employé');
                 Redirect::to('update');
@@ -210,7 +210,7 @@ class AdminsController
         $res = Employe::delete($data);
         if ($res = 'ok') {
             Session::set('success', 'Emplpoye Suprimer');
-            Redirect::to('Listuser');
+            Redirect::to('listemp');
         } else {
             echo $res;
         }
@@ -228,7 +228,7 @@ class AdminsController
         $res = Employe::delete($data);
         if ($res = 'ok') {
             Session::set('success', 'Emplpoye Suprimer');
-            Redirect::to('homeAdmins');
+            Redirect::to('Dashboard');
         } else {
             echo $res;
         }
@@ -260,7 +260,7 @@ class AdminsController
             } else {
                 session::set('error', 'chef non ajouter');
             }
-            Redirect::to('addadmin');
+            Redirect::to('addchef');
         }
     }
 }

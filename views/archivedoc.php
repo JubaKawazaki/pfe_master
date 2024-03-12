@@ -83,11 +83,17 @@ if (isset($_POST['find'])) {
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Demandes Recus</a>
-                        <a class="collapse-item" href="#">Demandes Validés</a>
-                        <a class="collapse-item" href="#">Demande Refusés</a>
-                    </div>
+                    <?php
+
+                    $type = $_SESSION['type'];
+
+                    if ($type === 'user' || $type === 'admin') {
+                        include 'includes/dmndemp.php';
+                    } else {
+                        include 'includes/dmnd.php';
+                    }
+
+                    ?>
                 </div>
             </li>
 
@@ -270,7 +276,7 @@ if (isset($_POST['find'])) {
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <form method="POST" action="profil">
-                                    <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
+                                    <input type="hidden" name="mat" value="<?= $_SESSION['mat']; ?>">
 
                                     <button class="dropdown-item">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>

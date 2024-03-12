@@ -52,8 +52,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
-                        <a class="collapse-item" href="shared_dg.html">Documents Recus</a>
-                        <a class="collapse-item" href="archive_dg.html">Documents Archivés</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>partagedoc">Documents Recus</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>archivedoc">Documents Archivés</a>
                     </div>
                 </div>
             </li>
@@ -67,18 +67,25 @@
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Demandes Recus</a>
-                        <a class="collapse-item" href="#">Demandes Validés</a>
-                        <a class="collapse-item" href="#">Demande Refusés</a>
-                    </div>
+
+                    <?php
+
+                    $type = $_SESSION['type'];
+
+                    if ($type === 'user' || $type === 'admin') {
+                        include 'includes/dmndemp.php';
+                    } else {
+                        include 'includes/dmnd.php';
+                    }
+
+                    ?>
+
                 </div>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             <?php
-            $type = $_SESSION['type'];
 
             if ($type === 'Administrateur') {
                 include 'includes/gestion_dg.php';
@@ -274,98 +281,68 @@
                 </nav>
                 <!-- End of Topbar -->
 
+
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Ajouter un Chef de service</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Demandes Recus</h1>
                     </div>
-                    <!-- Content Row -->
-                    <div class="container-fluid">
-                        <div class="row" style="width: 105%;margin-left: 4%;">
-                            <div class="col-md-offset-1 col-md-10">
-                                <?php include './views/includes/alert.php' ?>
-                                <div class="container">
-                                    <form class="form" method="post">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-5">
-                                                <label for="structure">Structure :</label>
-                                                <select class="form-control" name="structure" id="structureSelect">
-                                                    <option selected>--Sélectionnez une structure--</option>
-                                                    <?php foreach ($structures as $structure): ?>
-                                                        <option value="<?= $structure['id_structure']; ?>">
-                                                            <?= $structure['nom_structure']; ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-5">
-                                                <label for="service">Service :</label>
-                                                <select name="service" id="serviceSelect"
-                                                    class="dynamic-list form-control">
-                                                    <option selected>--Sélectionnez un service--</option>
-                                                </select>
-                                                <div id="noServiceMessage" style="color: red; display: none;">
-                                                    Aucun service disponible pour la structure sélectionnée.</div>
-                                            </div>
-                                            <div class="form-group col-md-2 mt-4">
-                                                <button type="submit" name="ajouter_adm"
-                                                    class="btn btn-success btn-block">
-                                                    Ajouter Admin
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End of Main Content -->
 
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2021</span>
-                        </div>
-                    </div>
-                </footer>
-                <!-- End of Footer -->
+                    <!-- DataTales Example -->
+                    <?php
+                    include "includes/listdmnd.php";
+                    ?>
+                </div>
+                <!-- /.container-fluid -->
+
 
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
 
         </div>
-        <!-- End of Page Wrapper -->
+        <!-- End of Content Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
+    </div>
+    <!-- End of Page Wrapper -->
 
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Pret a quiter l'application ?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">X</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                        <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
-                    </div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Pret a quiter l'application ?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <?php include 'includes/script.php'; ?>
+    <?php include 'includes/script.php'; ?>
 
 </body>
 

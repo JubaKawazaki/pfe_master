@@ -1,3 +1,12 @@
+<?php
+$sectionModel = new EmployesController();
+if (isset($_POST['ajouter_Emp'])) {
+    $sectionModel->adduser();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,8 +61,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
-                        <a class="collapse-item" href="shared_dg.html">Documents Recus</a>
-                        <a class="collapse-item" href="archive_dg.html">Documents Archivés</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>partagedoc">Documents Recus</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>archivedoc">Documents Archivés</a>
                     </div>
                 </div>
             </li>
@@ -71,7 +80,7 @@
 
                     $type = $_SESSION['type'];
 
-                    if ($type === 'user') {
+                    if ($type === 'user' || $type === 'admin') {
                         include 'includes/dmndemp.php';
                     } else {
                         include 'includes/dmnd.php';
@@ -255,7 +264,7 @@
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <form method="POST" action="profil">
-                                    <input type="hidden" name="id" value="<?= $_SESSION['id']; ?>">
+                                    <input type="hidden" name="mat" value="<?= $_SESSION['mat']; ?>">
 
                                     <button class="dropdown-item">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -292,19 +301,15 @@
                         <div class="row" style="width: 105%;margin-left: 4%;">
                             <div class="col-md-offset-1 col-md-10">
                                 <div class="container">
-                                    <form class="form">
+                                    <form class="form" method="post">
                                         <h4><strong>Identification</strong></h4>
                                         <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label for="inputEmail4">ID</label>
-                                                <input type="email" class="form-control" placeholder="Email">
+                                        <div class="form-group col-md-4">
+                                                <label>Mot de passe</label>
+                                                <input type="text" name="password" class="form-control" placeholder="Entrez un le MDP qu'utilsiera l'employé">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Matricule</label>
-                                                <input type="password" class="form-control" placeholder="Password">
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="inputPassword4">SSN</label>
+                                                <label>SSN</label>
                                                 <select name="ssn" class="form-control">
                                                     <option selected>--Choisir--</option>
                                                     <option value="oui">Oui</option>
@@ -315,15 +320,15 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Nom</label>
-                                                <input type="email" class="form-control" placeholder="Email">
+                                                <label>Nom</label>
+                                                <input type="text" name="nom" class="form-control" placeholder="Entrez un nom">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Prenom</label>
-                                                <input type="password" class="form-control" placeholder="Password">
+                                                <label>Prenom</label>
+                                                <input type="text" name="prenom" class="form-control" placeholder="Entrez un prenom">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Sexe</label>
+                                                <label>Sexe</label>
                                                 <select name="sexe" class="form-control">
                                                     <option selected>--Choisir--</option>
                                                     <option value="Homme">Homme</option>
@@ -333,12 +338,12 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputEmail4">Date de naissance</label>
-                                                <input type="date" class="form-control">
+                                                <label>Date de naissance</label>
+                                                <input type="date" name="date_naissance" class="form-control">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Situation Familliale</label>
-                                                <select name="situation_famille" class="form-control">
+                                                <label>Situation Familliale</label>
+                                                <select name="sf" class="form-control">
                                                     <option selected>--Choisir--</option>
                                                     <option value="Célibataire">Célibataire</option>
                                                     <option value="Marié(e)">Marié(e)</option>
@@ -348,20 +353,22 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Nombre d'enfants</label>
-                                                <input type="number" name="nbr_enfant" class="form-control">
+                                                <label>Nombre d'enfants</label>
+                                                <input type="number" name="nbr_enft" class="form-control"
+                                                    placeholder="Entrez le nombre d'enfants">
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputPassword4">Invalidité</label>
-                                                <input type="texte" name="invalidité" class="form-control">
+                                                <label>Invalidité</label>
+                                                <input type="texte" name="invalid" class="form-control"
+                                                    placeholder="Entez une invalidité">
                                             </div>
                                         </div>
 
                                         <h4><strong>Status</strong></h4>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputCity">Status</label>
-                                                <select name="#" class="form-control">
+                                                <label>Status</label>
+                                                <select name="status" class="form-control">
                                                     <option selected>Choose...</option>
                                                     <option value="Mensuel">Mensuel</option>
                                                     <option value="Horaire">Horaire</option>
@@ -371,8 +378,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputState">Position</label>
-                                                <select name="#" class="form-control">
+                                                <label>Position</label>
+                                                <select name="position" class="form-control">
                                                     <option selected>Choose...</option>
                                                     <option value="Actif">Actif</option>
                                                     <option value="Bloqué">Bloqué</option>
@@ -394,8 +401,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputZip">Structure</label>
-                                                <select name="#" class="form-control">
+                                                <label>Structure</label>
+                                                <select name="structure" class="form-control">
                                                     <option selected>Choose...</option>
                                                     <option value="Echantillotheque">Echantillotheque</option>
                                                     <option value="Magasin piece rechange">Magasin piece rechange
@@ -419,22 +426,15 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputCity">Service</label>
-                                                <select name="#" class="form-control">
+                                                <label>Service</label>
+                                                <select name="service" class="form-control">
                                                     <option selected>Choose...</option>
                                                     <option>...</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputState">Poste</label>
-                                                <select name="#" class="form-control">
-                                                    <option selected>Choose...</option>
-                                                    <option>...</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="inputZip">Section</label>
-                                                <select name="#" class="form-control">
+                                                <label>Poste</label>
+                                                <select name="poste" class="form-control">
                                                     <option selected>Choose...</option>
                                                     <option>...</option>
                                                 </select>
@@ -442,8 +442,8 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
-                                                <label for="inputCity">Qualification</label>
-                                                <select name="#" class="form-control">
+                                                <label>Qualification</label>
+                                                <select name="qualif" class="form-control">
                                                     <option selected>Choose...</option>
                                                     <option value="BAC">BAC</option>
                                                     <option value="Licence">Licence</option>
@@ -456,8 +456,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputZip">Grade</label>
-                                                <select name="#" class="form-control">
+                                                <label>Grade</label>
+                                                <select name="grade" class="form-control">
                                                     <option selected>Choose...</option>
                                                     <option value="Execution">Execution</option>
                                                     <option value="Maitrise">Maitrise</option>
@@ -465,8 +465,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label for="inputState">Categorie</label>
-                                                <select name="#" class="form-control">
+                                                <label>Categorie</label>
+                                                <select name="categorie" class="form-control">
                                                     <option selected>Choose...</option>
                                                     <option value="e1">E1</option>
                                                     <option value="e2">E2</option>
@@ -495,16 +495,17 @@
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-5">
-                                                <label for="inputCity">Date d'entrée</label>
-                                                <input type="date" name="#" class="form-control">
+                                                <label>Date d'entrée</label>
+                                                <input type="date" name="date_entre" class="form-control">
                                             </div>
                                             <div class="form-group col-md-5">
-                                                <label for="inputState">Motif d'entrée</label>
-                                                <input type="text" name="#" class="form-control">
+                                                <label>Motif d'entrée</label>
+                                                <input type="text" name="motif_entre" class="form-control"
+                                                    placeholder="Entrez le motif d'entré">
                                             </div>
                                         </div>
                                         <br>
-                                        <input type="submit" name="#" value="Valider l'ajout"
+                                        <input type="submit" name="ajouter_Emp" value="Valider l'ajout"
                                             class="btn btn-info btn-lg btn-block">
                                     </form>
                                 </div>
