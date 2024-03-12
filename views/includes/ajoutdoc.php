@@ -6,8 +6,6 @@ if (isset($_POST['ajouter'])) {
 
 ?>
 
-
-
 <!-- document add trigger modal -->
 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#ajoutdocModal" style="margin-bottom: 5px;">
     <i class="fa fa-plus" style="margin-right: 5px;"></i>

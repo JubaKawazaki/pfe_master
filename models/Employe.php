@@ -296,16 +296,16 @@ class Employe
 
     public static function changepasswords($data)
     {
-        $id = $data['id'];
+        $id = $data['mat'];
         $ancienpwd = $data['ancpwd'];
         $nvpwd = $data['nvpwd'];
 
         $db = db::connect();
 
-        $stmt = $db->prepare("UPDATE employer SET password = :nvpwd WHERE id = :id AND password = :ancienpwd");
+        $stmt = $db->prepare("UPDATE employer SET password = :nvpwd WHERE mat = :mat AND password = :ancienpwd");
 
         // Liaison des paramètres individuels
-        $stmt->bindValue(":id", $id);
+        $stmt->bindValue(":mat", $id);
         $stmt->bindValue(":ancienpwd", $ancienpwd);
         $stmt->bindValue(":nvpwd", $nvpwd);
 

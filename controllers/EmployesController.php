@@ -94,7 +94,7 @@ class EmployesController
 
             if ($resultat == 'ok') {
                 Session::set('success', 'Employer ajouté avec succès');
-                Redirect::to('home');
+                Redirect::to('listemp');
             } else {
                 Session::set('error', 'Erreur lors de l\'ajout de l\'Employer');
                 Redirect::to('addEmp'); // Assurez-vous de rediriger vers la bonne page en cas d'erreur
@@ -237,7 +237,7 @@ class EmployesController
         $data = array();
         $data['ancpwd'] = $_POST['oldPassword'];
         $data['nvpwd'] = $_POST['newPassword'];
-        $data['id'] = $_SESSION['id'];
+        $data['mat'] = $_SESSION['mat'];
         $reponse = Employe::changepasswords($data);
         return $reponse;
     }

@@ -12,7 +12,7 @@ class DocumentController
 
             if ($size > 41943040) {
                 Session::set('error', 'La taille du document est très volumineuse');
-                Redirect::to('documents');
+                Redirect::to('listdoc');
             }
 
             $file_tmp = $_FILES["dff"]["tmp_name"];
@@ -28,10 +28,10 @@ class DocumentController
 
             if (Document::add_document($data)) {
                 Session::set('success', 'document ajouter Ajouter');
-                Redirect::to('documents');
+                Redirect::to('listdoc');
             } else {
                 Session::set('error', 'La taille du document est très volumineuse');
-                Redirect::to('documents');
+                Redirect::to('listdoc');
             }
         }
     }

@@ -264,7 +264,7 @@
                                         Profil
                                     </button>
                                 </form>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changemdpModal">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Modifier le mot de passe
                                 </a>
@@ -492,6 +492,42 @@
             </div>
         </div>
     </div>
+
+    <!-- Change MDP Modal-->
+    <div class="modal fade" id="changemdpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Changez Votre Mot de passe :</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="#">
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label>Anciens mot de passe :</label>
+                                <input type="password" name="old_mdp" class="form-control"
+                                    placeholder="Entrez votre anciens mot de passe">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label>Nouveau mot de passe :</label>
+                                <input type="password" name="new_mdp" class="form-control"
+                                    placeholder="Entrez votre nouveau mot de passe">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Modifier</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <?php include 'includes/script.php'; ?>
 
