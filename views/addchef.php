@@ -1,3 +1,22 @@
+<?php
+$serController = new EmployesController();
+$services = $serController->getServiceControlle();
+$struController = new EmployesController();
+$structures = $struController->getStructureControlle();
+
+$employe = null;
+if (isset($_POST['ajouter_adm'])) {
+    $add = new AdminsController();
+    $employe = $add->getEmployeByServ();
+}
+if (isset($_POST['choisir'])) {
+    $add = new AdminsController();
+    $employe = $add->updatetypeControll();
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -314,6 +333,66 @@
                                                     class="btn btn-success btn-block">
                                                     Ajouter Admin
                                                 </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <!-- DataTales Example -->
+                                            <div class="card shadow mb-4">
+                                                <div class="card-body">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped" id="dataTable" width="100%"
+                                                            cellspacing="0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>NOM</th>
+                                                                    <th>PRENOM</th>
+                                                                    <th>Matricule</th>
+                                                                    <th>Position</th>
+                                                                    <th>Poste</th>
+                                                                    <th>Service</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php if ($employe != null) {
+                                                                    foreach ($employe as $emp): ?>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <?= $emp['nom']; ?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <?= $emp['prenom']; ?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <?= $emp['mat']; ?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <?= $emp['position']; ?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <?= $emp['poste']; ?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <?= $emp['nom_service']; ?>
+                                                                            </td>
+                                                                            <td class="d-flex flex-row" >
+                                                                                <form method="post">
+                                                                                    <input type="hidden" name="mat"
+                                                                                        value="<?php echo $emp['mat']; ?>">
+                                                                                    <button class="btn btn-sm btn-info"
+                                                                                        name="choisir">
+                                                                                        <i class="fa fa-info"></i> choisiir
+                                                                                    </button>
+                                                                                </form>
+
+                                                                            </td>
+                                                                        </tr>
+                                                                    <?php endforeach;
+                                                                } ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>

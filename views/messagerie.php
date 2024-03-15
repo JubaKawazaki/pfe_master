@@ -1,22 +1,9 @@
-<?php
-if (isset($_POST['find'])) {
-    $date = new AdminsController();
-    $employe = $date->findEmployeADM();
-} else {
-    $date = new AdminsController();
-    $employe = $date->getAllusers();
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <?php
-    include 'includes/header.php';
-    ?>
+    <?php include 'includes/header.php'; ?>
 
 </head>
 
@@ -80,6 +67,7 @@ if (isset($_POST['find'])) {
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
+
                     <?php
 
                     $type = $_SESSION['type'];
@@ -91,6 +79,7 @@ if (isset($_POST['find'])) {
                     }
 
                     ?>
+
                 </div>
             </li>
 
@@ -109,10 +98,6 @@ if (isset($_POST['find'])) {
             }
 
             ?>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="edit.html">
@@ -279,7 +264,7 @@ if (isset($_POST['find'])) {
                                         Profil
                                     </button>
                                 </form>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#changemdpModal">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Modifier le mot de passe
                                 </a>
@@ -301,140 +286,99 @@ if (isset($_POST['find'])) {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Personal Workspace</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Matricule</th>
-                                            <th>Nom</th>
-                                            <th>Prenom</th>
-                                            <th>Position</th>
-                                            <th>Poste</th>
-                                            <th>Service</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($employe as $emp): ?>
-                                            <tr>
-                                                <td>
-                                                <?php if ($emp['type'] == "user") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/emp.svg">
-                                                    <?php } ?>
-                                                    <?php if ($emp['type'] == "admin") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/chef.svg">
-                                                    <?php } ?>
-                                                    <?php if ($emp['type'] == "administrateur") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/admin.svg">
-                                                    <?php } ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $emp['mat']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['nom']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['prenom']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['position']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['poste']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['nom_service']; ?>
-                                                </td>
-                                                <td class="d-flex flex-row">
+                    <!-- Content Row -->
 
-                                                    <form method="post" action="update" class="mr-2">
-                                                        <input type="hidden" name="id_service"
-                                                            value="<?= $emp['id_service']; ?>">
+                    <?php
+                    include "includes/chat.php";
+                    ?>
 
-                                                        <input type="hidden" name="mat" value="<?php echo $emp['mat']; ?>">
-                                                        <button class="btn btn-sm btn-success" name="update">
-                                                            <i class="fa fa-edit"></i>
-                                                            Mettre a jour
-                                                        </button>
-                                                    </form>
+                    <!-- /.container-fluid -->
 
-                                                    <form method="post" action="delete" class="mr-2">
-                                                        <input type="hidden" name="mat" value="<?= $emp['mat']; ?>">
-                                                        <input type="hidden" name="type" value="<?= $emp['type']; ?>">
-                                                        <button class="btn btn-sm btn-danger" name="delete">
-                                                            <i class="fa-solid fa-box-archive"></i>
-                                                            Archiver
-                                                        </button>
-                                                    </form>
-                                                    <form method="post" action="detail" class="mr-2">
-                                                        <input type="hidden" name="mat" value="<?php echo $emp['mat']; ?>">
-                                                        <input type="hidden" name="sx" value="<?php echo $emp['sexe']; ?>">
-                                                        <button class="btn btn-sm btn-info" name="details">
-                                                            <i class="fa fa-info"></i>
-                                                            Details
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
+                </div>
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>Copyright &copy; Your Website 2021</span>
                         </div>
                     </div>
-
-                </div>
-                <!-- /.container-fluid -->
+                </footer>
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Main Content -->
-
-            <!-- footer -->
-            <?php include "views/includes/footer.php"; ?>
-            <!-- end of footer -->
+            <!-- End of Content Wrapper -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Pret a quiter l'application ?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">X</span>
-                    </button>
-                </div>
-                <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                    <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pret a quiter l'application ?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                        <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <?php
-    include 'includes/script.php';
-    ?>
+        <!-- Change MDP Modal-->
+        <div class="modal fade" id="changemdpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Changez Votre Mot de passe :</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">X</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="#">
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label>Anciens mot de passe :</label>
+                                    <input type="password" name="old_mdp" class="form-control"
+                                        placeholder="Entrez votre anciens mot de passe">
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label>Nouveau mot de passe :</label>
+                                    <input type="password" name="new_mdp" class="form-control"
+                                        placeholder="Entrez votre nouveau mot de passe">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Modifier</button>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <?php include 'includes/script.php'; ?>
+
 </body>
 
 </html>

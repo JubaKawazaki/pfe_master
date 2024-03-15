@@ -381,16 +381,9 @@ if (isset($_POST['ajouter'])) {
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
+            <!-- footer -->
+            <?php include "views/includes/footer.php"; ?>
+            <!-- end of footer -->
         </div>
         <!-- End of Content Wrapper -->
 
@@ -415,8 +408,8 @@ if (isset($_POST['ajouter'])) {
                 </div>
                 <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
                     <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
                 </div>
             </div>
         </div>

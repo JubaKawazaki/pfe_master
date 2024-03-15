@@ -238,7 +238,7 @@
                                         <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="<?php echo BASE_URL; ?>messagerie">Read More Messages</a>
                             </div>
                         </li>
 
@@ -452,15 +452,9 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+            <!-- footer -->
+            <?php include "views/includes/footer.php"; ?>
+            <!-- end of footer -->
 
         </div>
         <!-- End of Content Wrapper -->

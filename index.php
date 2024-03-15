@@ -20,7 +20,9 @@ $pages = [
     'dmndV',
     'dmndR',
     'detail',
-    'update'
+    'update',
+    'messagerie',
+    'envoie'
 ];
 
 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {
