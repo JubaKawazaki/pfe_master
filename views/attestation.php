@@ -1,34 +1,9 @@
-<?php
-$type = $_SESSION['type'];
-if ($_SESSION['type'] == 'admin') {
-    if (isset($_POST['find'])) {
-        $date = new EmployesController();
-        $employe = $date->getonedm();
-    } else {
-        $date = new EmployesController();
-        $employe = $date->getadm();
-    }
-} else {
-    if (isset($_POST['find'])) {
-        $date = new EmployesController();
-        $employe = $date->getuserOn();
-    } else {
-        $date = new EmployesController();
-        $employe = $date->getuser();
-    }
-}
-
-
-?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
 
-    <?php
-    include 'includes/header.php';
-    ?>
+    <?php include 'includes/header.php'; ?>
 
 </head>
 
@@ -77,8 +52,8 @@ if ($_SESSION['type'] == 'admin') {
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>listdoc">Documents Personel</a>
-                        <a class="collapse-item" href="<?php echo BASE_URL; ?>partagedoc">Documents Recus</a>
-                        <a class="collapse-item" href="<?php echo BASE_URL; ?>archivedoc">Documents Archivés</a>
+                        <a class="collapse-item" href="shared_dg.html">Documents Recus</a>
+                        <a class="collapse-item" href="archive_dg.html">Documents Archivés</a>
                     </div>
                 </div>
             </li>
@@ -93,6 +68,8 @@ if ($_SESSION['type'] == 'admin') {
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <?php
+
+                    $type = $_SESSION['type'];
 
                     if ($type === 'user' || $type === 'admin') {
                         include 'includes/dmndemp.php';
@@ -119,10 +96,6 @@ if ($_SESSION['type'] == 'admin') {
             }
 
             ?>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="<?php echo BASE_URL; ?>editor">
@@ -311,94 +284,74 @@ if ($_SESSION['type'] == 'admin') {
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Veuillez selection le/les employée/s a qui envoyer le document
-                            :</h1>
-                        <form method="POST" action="<?php echo BASE_URL; ?>partagedoc">
-                            <div>
-                                <input type="hidden" name="id_doc"
-                                    value="<?php echo isset($_POST['id_doc']) ? $_POST['id_doc'] : ''; ?>">
-                                <button type="submit" class="btn btn-info" name="partagedoc">
-                                    <i class="fas fa-share"></i> Envoyer le document
-                                </button>
-                            </div>
+                        <h1 class="h3 mb-0 text-gray-800">Demande d'attestation de travail</h1>
                     </div>
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Type</th>
-                                            <th>Matricule</th>
-                                            <th>Nom</th>
-                                            <th>Prenom</th>
-                                            <th>Position</th>
-                                            <th>Poste</th>
-                                            <th>Service</th>
-                                            <th>Selection</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php foreach ($employe as $emp): ?>
-                                            <tr>
-                                                <td>
-                                                    <?php if ($emp['type'] == "user") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/emp.svg">
-                                                    <?php } ?>
-                                                    <?php if ($emp['type'] == "admin") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/chef.svg">
-                                                    <?php } ?>
-                                                    <?php if ($emp['type'] == "administrateur") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/admin.svg">
-                                                    <?php } ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $emp['mat']; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $emp['nom']; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $emp['prenom']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['position']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['poste']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $emp['nom_service']; ?>
-                                                </td>
-                                                <td class="d-flex flex-row">
-                                                    <input type="checkbox" class="form-check-input"
-                                                        name="selectedEmployees[]" value="<?= $emp['mat']; ?>">
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+
+                    <!-- Content Row -->
+                    <div class="container-fluid">
+                        <div class="row" style="width: 105%;margin-left: 4%;">
+                            <div class="col-md-offset-1 col-md-10">
+                                <div class="container">
+                                    <form class="form">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>Nom</label>
+                                                <input type="email" class="form-control"
+                                                    value="<?php echo $_SESSION['nom']; ?>" disabled>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Prenom</label>
+                                                <input type="text" class="form-control"
+                                                    value="<?php echo $_SESSION['prenom']; ?>" disabled>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Né le : </label>
+                                                <input type="text" name="date_naiss" class="form-control"
+                                                    value="<?php echo $_SESSION['date_nais']; ?>" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                                <label>Fonction/Poste</label>
+                                                <input type="text" name="poste" class="form-control"
+                                                    value="<?php echo $_SESSION['poste']; ?>" disabled>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Date d'entrée</label>
+                                                <input type="text" name="entre" class="form-control"
+                                                    value="<?php echo $_SESSION['date_entre']; ?>" disabled>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Motif d'entrée</label>
+                                                <input type="text" name="motif" class="form-control"
+                                                    value="<?php echo $_SESSION['motif_entre']; ?>" disabled>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <input type="submit" name="#" value="Envoyer la demande"
+                                            class="btn btn-info btn-lg btn-block">
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    </form>
-
                 </div>
                 <!-- /.container-fluid -->
 
+
             </div>
             <!-- End of Main Content -->
-            <style>
-                input[type="checkbox"] {
-                    width: 1.5em;
-                    height: 1.5em;
-                    margin-left: 40px;
-                }
-            </style>
-            <!-- footer -->
-            <?php include "views/includes/footer.php"; ?>
-            <!-- end of footer -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
         </div>
         <!-- End of Content Wrapper -->
 
@@ -423,46 +376,15 @@ if ($_SESSION['type'] == 'admin') {
                 </div>
                 <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
                 <div class="modal-footer">
-                    <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Ajout document Modal-->
-    <div class="modal fade" id="ajoutdocModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un document</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times; x</span>
-                    </button>
-                </div>
-                <form method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="fileInput">Choisir votre fichier</label>
-                            <input type="file" class="form-control-file" id="fileInput" name="dff"
-                                accept=".pdf, .doc, .docx, .ppt, .pptx, .xlsx, .xls, .xlsms" lang="fr">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" name="ajouter">Ajouter</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <?php include 'includes/script.php'; ?>
 
-
-
-    <?php
-    include 'includes/script.php';
-    ?>
 </body>
 
 </html>

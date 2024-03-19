@@ -115,7 +115,7 @@ if (isset($_POST['upd'])) {
             ?>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="edit.html">
+                <a class="nav-link" href="<?php echo BASE_URL; ?>editor">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Edition de texte</span></a>
             </li>
@@ -582,8 +582,8 @@ if (isset($_POST['upd'])) {
                 </div>
                 <div class="modal-body">Selectionnez "Logout" ci-dessous pour vous decconectez.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
                     <a class="btn btn-primary" href="<?php echo BASE_URL; ?>Logout">Logout</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
                 </div>
             </div>
         </div>

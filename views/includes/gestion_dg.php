@@ -32,7 +32,7 @@
                 <div id="collapsePagesTwo" class="collapse" aria-labelledby="headingPagesTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="<?php echo BASE_URL; ?>addchef">Ajouter un service</a>
-                        <a class="collapse-item" href="<?php echo BASE_URL; ?>listchef">Liste un departement</a>
+                        <a class="collapse-item" href="<?php echo BASE_URL; ?>listchef">Ajouter un departement</a>
                     </div>
                 </div>
             </li>

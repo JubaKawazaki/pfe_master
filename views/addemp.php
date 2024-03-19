@@ -107,7 +107,7 @@ if (isset($_POST['ajouter_Emp'])) {
             ?>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="edit.html">
+                <a class="nav-link" href="<?php echo BASE_URL; ?>editor">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Edition de texte</span></a>
             </li>

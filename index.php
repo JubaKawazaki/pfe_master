@@ -22,7 +22,9 @@ $pages = [
     'detail',
     'update',
     'messagerie',
-    'envoie'
+    'envoie',
+    'attestation',
+    'editor'
 ];
 
 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {

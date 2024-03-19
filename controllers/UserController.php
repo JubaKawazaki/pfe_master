@@ -30,6 +30,9 @@ class UserController
                 $_SESSION['id_adm'] = $res->id_adm;
                 $_SESSION['id_service'] = $res->id_service;
                 $_SESSION['poste'] = $res->poste;
+                $_SESSION['date_nais'] = $res->date_nais;
+                $_SESSION['date_entre'] = $res->date_entre;
+                $_SESSION['motif_entre'] = $res->motif_entre;
 
                 Redirect::to('Dashboard');
             } else {

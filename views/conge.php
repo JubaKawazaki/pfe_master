@@ -98,7 +98,7 @@
             ?>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="edit.html">
+                <a class="nav-link" href="<?php echo BASE_URL; ?>editor">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Edition de texte</span></a>
             </li>
@@ -318,7 +318,7 @@
                                                 <label for="inputEmail4">Poste</label>
                                                 <input type="text" name="fct" class="form-control"
                                                     value="<?php echo $_SESSION['poste']; ?>" disabled>
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
 
                                         <div class="form-row">

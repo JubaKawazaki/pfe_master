@@ -115,7 +115,7 @@ if (isset($_POST['ajouter'])) {
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="edit.html">
+                <a class="nav-link" href="<?php echo BASE_URL; ?>editor">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Edition de texte</span></a>
             </li>
@@ -423,7 +423,7 @@ if (isset($_POST['ajouter'])) {
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Ajouter un document</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times; x</span>
+                        <span aria-hidden="true">&times; </span>
                     </button>
                 </div>
                 <form method="post" enctype="multipart/form-data">

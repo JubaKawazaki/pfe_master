@@ -115,7 +115,7 @@ if (isset($_POST['find'])) {
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="edit.html">
+                <a class="nav-link" href="<?php echo BASE_URL; ?>editor">
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Edition de texte</span></a>
             </li>
@@ -311,7 +311,6 @@ if (isset($_POST['find'])) {
                                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th></th>
                                             <th>Matricule</th>
                                             <th>Nom</th>
                                             <th>Prenom</th>
@@ -324,17 +323,6 @@ if (isset($_POST['find'])) {
                                     <tbody>
                                         <?php foreach ($employe as $emp): ?>
                                             <tr>
-                                                <td>
-                                                <?php if ($emp['type'] == "user") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/emp.svg">
-                                                    <?php } ?>
-                                                    <?php if ($emp['type'] == "admin") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/chef.svg">
-                                                    <?php } ?>
-                                                    <?php if ($emp['type'] == "administrateur") { ?>
-                                                        <img class="img-profile rounded-circle" src="assets/img/admin.svg">
-                                                    <?php } ?>
-                                                </td>
                                                 <td>
                                                     <?php echo $emp['mat']; ?>
                                                 </td>
