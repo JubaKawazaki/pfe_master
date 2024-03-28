@@ -2,6 +2,68 @@
 class DocumentController
 {
 
+
+    public static function saveDemande()
+    {
+        $mat_createur = $_SESSION['mat'];
+        $file_dest = $_SESSION['filePath'];
+        $reference = $_SESSION['reference'];
+        $file = basename($file_dest);
+        $type = $_POST['type1'];
+
+        if($_SESSION['type']=="user"){
+            $matchef = Employe::getMatChefService($_SESSION['id_service']);
+        }
+
+        if($_SESSION['type']=="admin"){
+            $matchef = Employe::getMatAdmin();
+        }
+    
+        $data = array(
+            'mat_createur' => $mat_createur,
+            'mat_chef' => $matchef,
+            'lien_acd' => $file_dest,
+            'nom_doc' => $file,
+            'type' => $type,
+            'state' => 'En attente',
+            'reference' => $reference
+        );
+
+        if (Document::save_demande($data)) {
+            Session::set('success', 'Demander envoyer avec success');
+            Redirect::to('listdmnd');
+        } else {
+            Session::set('error', 'Erreur lors de l\'envoie de la demande');
+            Redirect::to('listdmnd');
+        }
+    }
+
+    public static function getDemandeCreate()
+    {
+        $mat_createur = $_SESSION['mat'];
+        $data = array(
+
+            'mat_createur' => $mat_createur
+        );
+        $documents = document::getCreatedDemande($data);
+        return $documents;
+    }
+
+
+    public static function getDemandeRecu()
+    {
+        $mat_chef = $_SESSION['mat'];
+        $data = array(
+
+            'mat_chef' => $mat_chef
+        );
+        $documents = document::getDemandeRecu($data);
+        return $documents;
+    }
+
+
+
+
     public static function addDocument()
     {
 

@@ -57,7 +57,6 @@ class Employe
         $stmt = null;
     }
     public static function getEmployes($data)
-
     {
 
         $structures = Employe::getStructureModele();
@@ -341,4 +340,24 @@ class Employe
             die('Erreur lors de la récupération du nombre incrémentiel');
         }
     }
+
+    public static function getMatChefService($id_service)
+    {
+        $stmtServices = db::connect()->prepare("SELECT mat FROM employer WHERE id_service=? AND type='admin'");
+        $stmtServices->execute(array($id_service));
+        $chefService = $stmtServices->fetchColumn(); // Utilisation de fetchColumn() pour récupérer uniquement la valeur de la colonne 'mat'
+        return $chefService;
+    }
+    public static function getMatAdmin()
+    {
+        $stmtServices = db::connect()->prepare("SELECT mat FROM employer WHERE id_service=? AND type='Administrateur'");
+        $stmtServices->execute();
+        $chefService = $stmtServices->fetchColumn(); // Utilisation de fetchColumn() pour récupérer uniquement la valeur de la colonne 'mat'
+        return $chefService;
+    }
+
+
+
 }
+
+

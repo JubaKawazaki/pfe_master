@@ -8,13 +8,10 @@
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
-
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center"
                 href="<?php echo BASE_URL; ?>Dashboard">
@@ -23,25 +20,20 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">Saidal</div>
             </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="<?php echo BASE_URL; ?>Dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
-
             <!-- Heading -->
             <div class="sidebar-heading">
                 Workspace
             </div>
-
             <!-- Nav Item - Document Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -57,7 +49,6 @@
                     </div>
                 </div>
             </li>
-
             <!-- Nav Item - Demande Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -68,23 +59,18 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <?php
-
                     $type = $_SESSION['type'];
-
                     if ($type === 'user' || $type === 'admin') {
                         include 'includes/dmndemp.php';
                     } else {
                         include 'includes/dmnd.php';
                     }
-
                     ?>
                 </div>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
             <?php
-
             if ($type === 'Administrateur') {
                 include 'includes/gestion_dg.php';
             }
@@ -94,7 +80,6 @@
             if ($type === 'user') {
                 //rien n'a afficher
             }
-
             ?>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
@@ -102,30 +87,22 @@
                     <i class="fas fa-fw fa-edit"></i>
                     <span>Edition de texte</span></a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
         </ul>
         <!-- End of Sidebar -->
-
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
-
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -176,7 +153,6 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
-
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
@@ -239,9 +215,7 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
                         </li>
-
                         <div class="topbar-divider d-none d-sm-block"></div>
-
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -256,7 +230,6 @@
                                 aria-labelledby="userDropdown">
                                 <form method="POST" action="profil">
                                     <input type="hidden" name="mat" value="<?= $_SESSION['mat']; ?>">
-
                                     <button class="dropdown-item">
                                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Profil
@@ -273,96 +246,91 @@
                                 </a>
                             </div>
                         </li>
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Demande d'attestation de travail</h1>
                     </div>
-
                     <!-- Content Row -->
                     <div class="container-fluid">
                         <div class="row" style="width: 105%;margin-left: 4%;">
                             <div class="col-md-offset-1 col-md-10">
                                 <div class="container">
-                                    <form class="form">
+                                    <form class="form" method="post" action="attest">
                                         <div class="form-row">
                                             <div class="form-group col-md-4">
                                                 <label>Nom</label>
-                                                <input type="email" class="form-control"
+                                                <input type="text" class="form-control"
                                                     value="<?php echo $_SESSION['nom']; ?>" disabled>
+                                                <input type="hidden" name="nom" value="<?php echo $_SESSION['nom']; ?>">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label>Prenom</label>
                                                 <input type="text" class="form-control"
                                                     value="<?php echo $_SESSION['prenom']; ?>" disabled>
+                                                <input type="hidden" name="prenom"
+                                                    value="<?php echo $_SESSION['prenom']; ?>">
                                             </div>
                                             <div class="form-group col-md-4">
                                                 <label>Né le : </label>
-                                                <input type="text" name="date_naiss" class="form-control"
+                                                <input type="text" class="form-control"
                                                     value="<?php echo $_SESSION['date_nais']; ?>" disabled>
+                                                <input type="hidden" name="date_naiss"
+                                                    value="<?php echo $_SESSION['date_nais']; ?>">
                                             </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-4">
-                                                <label>Fonction/Poste</label>
-                                                <input type="text" name="poste" class="form-control"
-                                                    value="<?php echo $_SESSION['poste']; ?>" disabled>
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label>Date d'entrée</label>
-                                                <input type="text" name="entre" class="form-control"
-                                                    value="<?php echo $_SESSION['date_entre']; ?>" disabled>
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label>Motif d'entrée</label>
-                                                <input type="text" name="motif" class="form-control"
-                                                    value="<?php echo $_SESSION['motif_entre']; ?>" disabled>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <input type="submit" name="#" value="Envoyer la demande"
-                                            class="btn btn-info btn-lg btn-block">
-                                    </form>
                                 </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label>Fonction/Poste</label>
+                                        <input type="text" class="form-control"
+                                            value="<?php echo $_SESSION['poste']; ?>" disabled>
+                                        <input type="hidden" name="poste" value="<?php echo $_SESSION['poste']; ?>">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Date d'entrée</label>
+                                        <input type="text" class="form-control"
+                                            value="<?php echo $_SESSION['date_entre']; ?>" disabled>
+                                        <input type="hidden" name="entre"
+                                            value="<?php echo $_SESSION['date_entre']; ?>">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Motif d'entrée</label>
+                                        <input type="text" class="form-control"
+                                            value="<?php echo $_SESSION['motif_entre']; ?>" disabled>
+                                        <input type="hidden" name="motif"
+                                            value="<?php echo $_SESSION['motif_entre']; ?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <input type="hidden" name="mat" value="<?php $_SESSION['mat']; ?>">
+                                <input type="hidden" name="type1" value="Attestation de travail">
+                                <button type="submit" name="envoyer" class="btn btn-info btn-lg btn-block">Envoyer la
+                                    demande</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
-
-
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
+            <!-- /.container-fluid -->
+            <!-- footer -->
+            <?php include "views/includes/footer.php"; ?>
+            <!-- end of footer -->
         </div>
-        <!-- End of Content Wrapper -->
-
+        <!-- End of Main Content -->
+    </div>
+    <!-- End of Content Wrapper -->
     </div>
     <!-- End of Page Wrapper -->
-
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -382,9 +350,7 @@
             </div>
         </div>
     </div>
-
     <?php include 'includes/script.php'; ?>
-
 </body>
 
 </html>

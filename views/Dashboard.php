@@ -72,11 +72,15 @@
 
                     $type = $_SESSION['type'];
 
-                    if ($type === 'user' || $type === 'admin') {
+                    if ($type === 'user') {
                         include 'includes/dmndemp.php';
-                    } else {
+                    } ;
+                    if($type === 'admin'){
+                        include 'includes/dmndadmin.php';
+                    } ;
+                    if ($type === 'user'){
                         include 'includes/dmnd.php';
-                    }
+                    };
 
                     ?>
 

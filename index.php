@@ -24,7 +24,9 @@ $pages = [
     'messagerie',
     'envoie',
     'attestation',
-    'editor'
+    'editor',
+    'attest',
+    'listdmndchef'
 ];
 
 if (isset($_SESSION['logged']) && $_SESSION['logged'] == true) {

@@ -1,6 +1,55 @@
 <?php
 class Document
 {
+
+    public static function save_demande($data)
+    {
+        $date = date('y-m-d H:i:s');
+
+        $db = new PDO('mysql:host=localhost;dbname=saidal', 'root', '');
+        $stmt = $db->prepare("INSERT INTO demande (`reference`, `type`, `state`, `lien`, `date_creation`, `mat_createur`, `mat_chef`)
+         VALUES (:reference, :type, :state, :lien , :date_creation, :mat_createur, :mat_chef)");
+        $stmt->bindParam(':reference', $data['reference']);
+        $stmt->bindParam(':type', $data['type']);
+        $stmt->bindParam(':state', $data['state']);
+        $stmt->bindParam(':lien', $data['lien_acd']);
+        $stmt->bindParam(':date_creation', $date);
+        $stmt->bindParam(':mat_createur', $data['mat_createur']);
+        $stmt->bindParam(':mat_chef', $data['mat_chef']);
+        return $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            move_uploaded_file($file_tmp, $lien_acd);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function getCreatedDemande($data)
+    {
+
+        $mat = $data['mat_createur'];
+        $stm = db::connect()->prepare("SELECT * FROM demande WHERE  mat_createur = ? AND state = 'En attente'");
+        $stm->execute(array($mat));
+        return $stm->fetchAll();
+    }
+
+    public static function getDemandeRecu($data)
+{
+    $mat = $data['mat_chef'];
+    $stm = db::connect()->prepare("
+        SELECT d.*, e.nom, e.prenom 
+        FROM demande d
+        INNER JOIN employer e ON d.mat_createur = e.mat
+        WHERE d.mat_chef = ? AND d.state = 'En attente'
+    ");
+    $stm->execute(array($mat));
+    return $stm->fetchAll();
+}
+
+
+
+
     public static function add_document($data)
     {
         $date = date('y-m-d H:i:s');
